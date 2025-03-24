@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import { loginUser } from "../../service/api";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface ILoginScreenProps {
   onEyePress?: () => void;
@@ -42,6 +43,8 @@ const LoginPage: React.FC<ILoginScreenProps> = ({ onEyePress }) => {
           text1: "Đăng nhập thành công!",
           text1Style: { textAlign: "center", fontSize: 16 },
         });
+        await AsyncStorage.setItem("token", response.data.token);
+        await AsyncStorage.setItem("userData", JSON.stringify(response.data.user));
         navigation.navigate("AppNavigation");
       } else {
         Toast.show({

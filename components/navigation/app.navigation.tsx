@@ -12,7 +12,7 @@ import { RootStackParamList } from "../../utils/routes";
 import ProgramPage from "../../pages/Program";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../../pages/Login";
-
+import ProgramDetail from "../../pages/Program/ProgramDetail";
 const HomeLayout = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   return (
@@ -39,6 +39,23 @@ const HomeLayout = () => {
         options={{ title: "StudentDetail" }}
         component={ProductDetailScreen}
       /> */}
+    </Stack.Navigator>
+  );
+};
+const ProgramLayout = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Program"
+        component={ProgramPage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProgramDetail"
+        component={ProgramDetail}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -182,7 +199,7 @@ function AppNavigation() {
         />
         <Drawer.Screen
           name="Program"
-          component={ProgramPage}
+          component={ProgramLayout}
           options={{
             headerStyle: { backgroundColor: "#3674B5" },
             headerTintColor: "#fff",
