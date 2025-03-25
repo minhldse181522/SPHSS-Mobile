@@ -13,6 +13,8 @@ import ProgramPage from "../../pages/Program";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../../pages/Login";
 import ProgramDetail from "../../pages/Program/ProgramDetail";
+import PsyDetail from "../../pages/Psy/PsyDetail";
+import SurveyDetail from "../../pages/SurveyDetail";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { NavigationContainer } from '@react-navigation/native';
 import AppointmentSchedule from "../../pages/History/AppointmentSchedule";
@@ -36,16 +38,6 @@ const HomeLayout = () => {
           title: "Trang chủ",
         }}
       />
-      {/* <Stack.Screen
-        name="profile"
-        options={{ title: "Products" }}
-        component={ProfilePage}
-      /> */}
-      {/* <Stack.Screen
-        name="product-detail"
-        options={{ title: "StudentDetail" }}
-        component={ProductDetailScreen}
-      /> */}
     </Stack.Navigator>
   );
 };
@@ -61,6 +53,43 @@ const ProgramLayout = () => {
       <Stack.Screen
         name="ProgramDetail"
         component={ProgramDetail}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const PsyStack = createNativeStackNavigator<RootStackParamList>();
+
+const PsyLayout = () => {
+  return (
+    <PsyStack.Navigator>
+      <PsyStack.Screen
+        name="psy"
+        component={PsyPage}
+        options={{ headerShown: false }}
+      />
+      <PsyStack.Screen
+        name="PsyDetail"
+        component={PsyDetail}
+        options={{ headerShown: false }}
+      />
+    </PsyStack.Navigator>
+  );
+};
+
+const SurveyLayout = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Survey"
+        component={SurveyPage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SurveyDetail"
+        component={SurveyDetail}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -126,7 +155,7 @@ const BottomTabNavigation = () => {
       />
       <Tab.Screen
         name="Survey"
-        component={SurveyPage}
+        component={SurveyLayout}
         options={{
           tabBarIcon: () => (
             <AntDesign name="profile" size={24} color="black" />
@@ -136,7 +165,7 @@ const BottomTabNavigation = () => {
       />
       <Tab.Screen
         name="Psychologist"
-        component={PsyPage}
+        component={PsyLayout}
         options={{
           tabBarIcon: () => (
             <MaterialIcons name="schedule" size={24} color="black" />
