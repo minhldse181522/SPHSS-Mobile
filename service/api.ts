@@ -30,3 +30,7 @@ export const getSurveyResultById = (id: string) => {
 export const submitSurvey = (data: any) => {
   return api.post("/api/survey-result/submit", data);
 };
+
+export const getAppointmentSchedule = (userId: string) => {
+  return api.get(`/api/appointmentsByUser?user_id=${userId}`);
+};

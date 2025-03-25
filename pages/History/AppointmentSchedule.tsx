@@ -11,6 +11,7 @@ import {
 import { Linking } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../config/axios";
+import { getAppointmentSchedule } from "../../service/api";
 
 // Define interfaces for your data structures
 interface User {
@@ -64,10 +65,8 @@ const AppointmentSchedule: React.FC = () => {
     try {
       const storeUser = await AsyncStorage.getItem("userData");
       const user: User = JSON.parse(storeUser || "{}");
-      const response = await api.get<Appointment[]>( // Changed type to Appointment[]
-        `https://ssphis.onrender.com/api/appointmentsByUser?user_id=${user.id}`
-      );
-      setAppointments(response.data); // Just response.data
+      const response = await getAppointmentSchedule(user.id);
+      setAppointments(response.data.data);
     } catch (error) {
       console.error("Error fetching appointments:", error);
     } finally {
@@ -80,7 +79,9 @@ const AppointmentSchedule: React.FC = () => {
       const response = await api.get<{ data: Report[] }>(
         "https://ssphis.onrender.com/api/reports"
       );
-      const report = response.data.data.find((r) => r.appointment_id === appointmentId);
+      const report = response.data.data.find(
+        (r) => r.appointment_id === appointmentId
+      );
       setSelectedReport(report || null);
       setModalVisible(true);
     } catch (error) {
@@ -115,8 +116,8 @@ const AppointmentSchedule: React.FC = () => {
                 item.status === "Completed"
                   ? "#28A745"
                   : item.status === "Approved"
-                    ? "#007AFF"
-                    : "#FFC107",
+                  ? "#007AFF"
+                  : "#FFC107",
             },
           ]}
         >
@@ -142,7 +143,12 @@ const AppointmentSchedule: React.FC = () => {
             }
           }}
         >
-          <Text style={[styles.cardText, { color: "blue", textDecorationLine: "underline" }]}>
+          <Text
+            style={[
+              styles.cardText,
+              { color: "blue", textDecorationLine: "underline" },
+            ]}
+          >
             {item.linkMeeting || "N/A"}
           </Text>
         </TouchableOpacity>
@@ -181,7 +187,9 @@ const AppointmentSchedule: React.FC = () => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <ScrollView>
-              <Text style={styles.modalTitle}>BÁO CÁO CHI TIẾT BUỔI TƯ VẤN</Text>
+              <Text style={styles.modalTitle}>
+                BÁO CÁO CHI TIẾT BUỔI TƯ VẤN
+              </Text>
 
               {selectedReport ? (
                 <>
@@ -242,7 +250,9 @@ const AppointmentSchedule: React.FC = () => {
                     </Text>
                   </View>
                   <View style={styles.modalSection}>
-                    <Text style={styles.modalSectionTitle}>Thông tin cá nhân</Text>
+                    <Text style={styles.modalSectionTitle}>
+                      Thông tin cá nhân
+                    </Text>
                     <Text style={styles.modalSectionValue}>
                       Email: {selectedReport.user_email}
                     </Text>
@@ -252,13 +262,17 @@ const AppointmentSchedule: React.FC = () => {
                   </View>
 
                   <View style={styles.modalSection}>
-                    <Text style={styles.modalSectionTitle}>MỨC ĐỘ SỨC KHỎE</Text>
+                    <Text style={styles.modalSectionTitle}>
+                      MỨC ĐỘ SỨC KHỎE
+                    </Text>
                     <Text style={styles.modalSectionValue}>
                       {selectedReport.health_level}
                     </Text>
                   </View>
                   <View style={styles.modalSection}>
-                    <Text style={styles.modalSectionTitle}>Tình trạng sức khỏe</Text>
+                    <Text style={styles.modalSectionTitle}>
+                      Tình trạng sức khỏe
+                    </Text>
                     <Text style={styles.modalSectionValue}>
                       {selectedReport.health_status}
                     </Text>
