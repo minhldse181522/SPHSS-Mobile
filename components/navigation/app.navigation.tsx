@@ -14,6 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../../pages/Login";
 import ProgramDetail from "../../pages/Program/ProgramDetail";
 import PsyDetail from "../../pages/Psy/PsyDetail";
+import SurveyDetail from "../../pages/SurveyDetail";
 const HomeLayout = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   return (
@@ -70,6 +71,24 @@ const PsyLayout = () => {
   );
 };
 
+const SurveyLayout = () => {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Survey"
+        component={SurveyPage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SurveyDetail"
+        component={SurveyDetail}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const BottomTabNavigation = () => {
   const Tab = createBottomTabNavigator();
   return (
@@ -90,7 +109,7 @@ const BottomTabNavigation = () => {
       />
       <Tab.Screen
         name="Survey"
-        component={SurveyPage}
+        component={SurveyLayout}
         options={{
           tabBarIcon: () => (
             <AntDesign name="profile" size={24} color="black" />
