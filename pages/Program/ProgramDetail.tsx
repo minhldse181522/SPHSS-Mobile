@@ -14,7 +14,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { joinProgram } from "../../service/api";
 
-
 type ProgramDetailRouteProp = RouteProp<
   {
     ProgramDetail: {
@@ -31,7 +30,7 @@ function ProgramDetail() {
     try {
       const storeUser = await AsyncStorage.getItem("userData");
       const user = JSON.parse(storeUser || "{}");
-      if(!user.id) {
+      if (!user.id) {
         Toast.show({
           type: "error",
           text1: "Vui lòng đăng nhập để tham gia chương trình!",
@@ -40,9 +39,9 @@ function ProgramDetail() {
         return;
       }
       const response = await joinProgram(user.id, program.programId);
-      console.log({response});
-      
-      if(response.status === 201) {
+      console.log({ response });
+
+      if (response.status === 201) {
         Toast.show({
           type: "success",
           text1: "Tham gia chương trình thành công!",
@@ -72,7 +71,9 @@ function ProgramDetail() {
               ]}
             >
               <TouchableOpacity onPress={handleJoinProgram}>
-                <Text style={{color: "#fff", fontSize: 16, fontWeight: "500"}}>
+                <Text
+                  style={{ color: "#fff", fontSize: 16, fontWeight: "500" }}
+                >
                   Tham gia
                 </Text>
               </TouchableOpacity>
@@ -154,7 +155,9 @@ function ProgramDetail() {
             </View>
             <View style={styles.infoItem}>
               <Text style={styles.infoLabel}>Price</Text>
-              <Text style={styles.infoValue}>{program.price === "0" ? "Free" : program.price}</Text>
+              <Text style={styles.infoValue}>
+                {program.price === "0" ? "Free" : program.price}
+              </Text>
             </View>
             <View style={styles.infoItem}>
               <Text style={styles.infoLabel}>Rating</Text>
@@ -167,15 +170,23 @@ function ProgramDetail() {
               <Text style={styles.sectionTitle}>Instructors</Text>
               {program.instructors.map((instructor, index) => (
                 <View key={index} style={styles.instructorItem}>
-                  <Text style={styles.instructorName}>{instructor.instructorName}</Text>
+                  <Text style={styles.instructorName}>
+                    {instructor.instructorName}
+                  </Text>
                   {instructor.instructorTitle && (
-                    <Text style={styles.instructorTitle}>{instructor.instructorTitle}</Text>
+                    <Text style={styles.instructorTitle}>
+                      {instructor.instructorTitle}
+                    </Text>
                   )}
                   {instructor.instructorExperience && (
-                    <Text style={styles.instructorExperience}>{instructor.instructorExperience}</Text>
+                    <Text style={styles.instructorExperience}>
+                      {instructor.instructorExperience}
+                    </Text>
                   )}
                   {instructor.instructorDescription && (
-                    <Text style={styles.instructorDescription}>{instructor.instructorDescription}</Text>
+                    <Text style={styles.instructorDescription}>
+                      {instructor.instructorDescription}
+                    </Text>
                   )}
                 </View>
               ))}
@@ -295,4 +306,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProgramDetail; 
+export default ProgramDetail;
