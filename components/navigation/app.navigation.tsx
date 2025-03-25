@@ -15,6 +15,13 @@ import { NavigationProps } from "../../pages/Login";
 import ProgramDetail from "../../pages/Program/ProgramDetail";
 import PsyDetail from "../../pages/Psy/PsyDetail";
 import SurveyDetail from "../../pages/SurveyDetail";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { NavigationContainer } from '@react-navigation/native';
+import AppointmentSchedule from "../../pages/History/AppointmentSchedule";
+import ProgramHistory from "../../pages/History/ProgramHistory";
+import SurveyHistory from "../../pages/History/SurveyHistory";
+
+
 const HomeLayout = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   return (
@@ -88,6 +95,45 @@ const SurveyLayout = () => {
     </Stack.Navigator>
   );
 };
+const HisotryLayout = () => {
+  const Tab = createMaterialTopTabNavigator();
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: "#007AFF",
+        tabBarInactiveTintColor: "gray",
+        tabBarStyle: {
+          backgroundColor: "#fff",
+        },
+        tabBarIndicatorStyle: {
+          backgroundColor: "#007AFF",
+          height: 3,
+        },
+        tabBarLabelStyle: {
+          fontSize: 14,
+          fontWeight: "600",
+          textTransform: "none",
+        },
+      }}
+    >
+      <Tab.Screen
+        name="SurveyHistory"
+        component={SurveyHistory}
+        options={{ title: "Lịch sử khảo sát" }}
+      />
+      <Tab.Screen
+        name="ProgramHistory"
+        component={ProgramHistory}
+        options={{ title: "Lịch sử chương trình" }}
+      />
+      <Tab.Screen
+        name="AppointmentSchedule"
+        component={AppointmentSchedule}
+        options={{ title: "Lịch hẹn khám" }}
+      />
+    </Tab.Navigator>
+  );
+};
 
 const BottomTabNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -127,6 +173,7 @@ const BottomTabNavigation = () => {
           title: "Đặt lịch",
         }}
       />
+
     </Tab.Navigator>
   );
 };
@@ -173,8 +220,8 @@ function AppNavigation() {
                       backgroundColor: pressed
                         ? "#f0f0f0"
                         : props.state.index === index
-                        ? "#A1E3F9"
-                        : "transparent",
+                          ? "#A1E3F9"
+                          : "transparent",
                       borderRadius: 8,
                     })}
                   >
@@ -242,6 +289,15 @@ function AppNavigation() {
             headerStyle: { backgroundColor: "#3674B5" },
             headerTintColor: "#fff",
             title: "Thông tin hồ sơ",
+          }}
+        />
+        <Drawer.Screen
+          name="History"
+          component={HisotryLayout}
+          options={{
+            headerStyle: { backgroundColor: "#3674B5" },
+            headerTintColor: "#fff",
+            title: "Lịch sử",
           }}
         />
       </Drawer.Navigator>
