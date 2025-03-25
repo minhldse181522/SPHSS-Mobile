@@ -34,3 +34,7 @@ export const submitSurvey = (data: any) => {
 export const getAppointmentSchedule = (userId: string) => {
   return api.get(`/api/appointmentsByUser?user_id=${userId}`);
 };
+
+export const getProgramByUserId = (id: number) => {
+  return api.get(`/api/program/user/${id}`);
+};
