@@ -10,6 +10,7 @@ import {
 import { RouteProp, useRoute, useNavigation } from "@react-navigation/native";
 import api from "../../config/axios";
 import { Ionicons } from "@expo/vector-icons";
+import { getReports } from "../../service/api";
 
 interface Report {
   report_id: string;
@@ -55,12 +56,14 @@ const AppointmentReport: React.FC = () => {
   const fetchReportDetails = async (): Promise<void> => {
     try {
       setLoading(true);
-      const response = await api.get<{ data: Report[] }>(
-        "https://ssphis.onrender.com/api/reports"
-      );
+      const response = await getReports();
+      console.log("response", response.data.data[0].appointment_id);
+
       const foundReport = response.data.data.find(
-        (r) => r.appointment_id === appointmentId
+        (r: any) => r.appointment_id === parseInt(appointmentId, 10)
       );
+      console.log("foundReport", foundReport);
+
       setReport(foundReport || null);
     } catch (error) {
       console.error("Error fetching report details:", error);
@@ -68,6 +71,8 @@ const AppointmentReport: React.FC = () => {
       setLoading(false);
     }
   };
+  console.log({ report });
+  console.log({ appointmentId });
 
   const formatDate = (dateString: string): string => {
     return new Date(dateString).toLocaleDateString("vi-VN");
@@ -119,7 +124,7 @@ const AppointmentReport: React.FC = () => {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="arrow-back" size={24} color="#333" />
+          <Ionicons name="arrow-back" size={24} color="#3674B5" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Báo cáo buổi tư vấn</Text>
         <View style={{ width: 24 }} />
@@ -130,87 +135,165 @@ const AppointmentReport: React.FC = () => {
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.reportCard}>
-          <Text style={styles.reportTitle}>BÁO CÁO CHI TIẾT BUỔI TƯ VẤN</Text>
+          <View style={styles.reportHeaderBanner}>
+            <Text style={styles.reportTitle}>BÁO CÁO CHI TIẾT BUỔI TƯ VẤN</Text>
+          </View>
 
           <View style={styles.reportRow}>
             <View style={styles.reportColumn}>
-              <Text style={styles.reportLabel}>NGÀY TƯ VẤN</Text>
+              <View style={styles.iconLabelContainer}>
+                <Ionicons name="calendar-outline" size={18} color="#3674B5" />
+                <Text style={styles.reportLabel}>NGÀY TƯ VẤN</Text>
+              </View>
               <Text style={styles.reportValue}>
                 {formatDate(report.appointment_date)}
               </Text>
             </View>
             <View style={styles.reportColumn}>
-              <Text style={styles.reportLabel}>THỜI GIAN</Text>
+              <View style={styles.iconLabelContainer}>
+                <Ionicons name="time-outline" size={18} color="#3674B5" />
+                <Text style={styles.reportLabel}>THỜI GIAN</Text>
+              </View>
               <Text style={styles.reportValue}>
                 {report.start_time} - {report.end_time}
               </Text>
             </View>
             <View style={styles.reportColumn}>
-              <Text style={styles.reportLabel}>TRẠNG THÁI</Text>
+              <View style={styles.iconLabelContainer}>
+                <Ionicons
+                  name="checkmark-circle-outline"
+                  size={18}
+                  color="#3674B5"
+                />
+                <Text style={styles.reportLabel}>TRẠNG THÁI</Text>
+              </View>
               <Text style={[styles.reportValue, { color: "#28A745" }]}>
                 {report.appointment_status}
               </Text>
             </View>
           </View>
 
+          <View style={styles.divider} />
+
           <View style={styles.reportRow}>
             <View style={styles.reportColumn}>
-              <Text style={styles.reportLabel}>CHUYÊN VIÊN TƯ VẤN</Text>
+              <View style={styles.iconLabelContainer}>
+                <Ionicons name="person-outline" size={18} color="#3674B5" />
+                <Text style={styles.reportLabel}>CHUYÊN VIÊN</Text>
+              </View>
               <Text style={styles.reportValue}>{report.full_name_pys}</Text>
             </View>
             <View style={styles.reportColumn}>
-              <Text style={styles.reportLabel}>EMAIL</Text>
+              <View style={styles.iconLabelContainer}>
+                <Ionicons name="mail-outline" size={18} color="#3674B5" />
+                <Text style={styles.reportLabel}>EMAIL</Text>
+              </View>
               <Text style={styles.reportValue}>{report.pys_email}</Text>
             </View>
             <View style={styles.reportColumn}>
-              <Text style={styles.reportLabel}>ĐIỆN THOẠI</Text>
+              <View style={styles.iconLabelContainer}>
+                <Ionicons name="call-outline" size={18} color="#3674B5" />
+                <Text style={styles.reportLabel}>ĐIỆN THOẠI</Text>
+              </View>
               <Text style={styles.reportValue}>{report.pys_phone}</Text>
             </View>
           </View>
 
-          <View style={styles.reportSection}>
-            <Text style={styles.reportSectionTitle}>HỌ VÀ TÊN SINH VIÊN</Text>
-            <Text style={styles.reportSectionValue}>{report.full_name}</Text>
+          <View style={styles.divider} />
+
+          <View style={styles.infoSection}>
+            <View style={styles.studentInfoHeader}>
+              <Ionicons
+                name="person-circle-outline"
+                size={24}
+                color="#3674B5"
+              />
+              <Text style={styles.studentInfoTitle}>THÔNG TIN SINH VIÊN</Text>
+            </View>
+
+            <View style={styles.infoGrid}>
+              <View style={styles.infoItem}>
+                <Text style={styles.infoLabel}>Họ và tên:</Text>
+                <Text style={styles.infoValue}>{report.full_name}</Text>
+              </View>
+
+              <View style={styles.infoItem}>
+                <Text style={styles.infoLabel}>MSSV:</Text>
+                <Text style={styles.infoValue}>{report.student_id}</Text>
+              </View>
+
+              <View style={styles.infoItem}>
+                <Text style={styles.infoLabel}>Email:</Text>
+                <Text style={styles.infoValue}>{report.user_email}</Text>
+              </View>
+
+              <View style={styles.infoItem}>
+                <Text style={styles.infoLabel}>SĐT:</Text>
+                <Text style={styles.infoValue}>{report.user_phone}</Text>
+              </View>
+            </View>
           </View>
 
-          <View style={styles.reportSection}>
-            <Text style={styles.reportSectionTitle}>MSSV</Text>
-            <Text style={styles.reportSectionValue}>{report.student_id}</Text>
+          <View style={styles.divider} />
+
+          <View style={styles.healthSection}>
+            <View style={styles.sectionHeader}>
+              <Ionicons name="fitness-outline" size={24} color="#3674B5" />
+              <Text style={styles.sectionTitle}>ĐÁNH GIÁ SỨC KHỎE</Text>
+            </View>
+
+            <View style={styles.healthLevelContainer}>
+              <Text style={styles.healthLevelLabel}>Mức độ sức khỏe:</Text>
+              <View
+                style={[
+                  styles.healthLevelBadge,
+                  report.health_level === "Low"
+                    ? styles.healthLevelLow
+                    : report.health_level === "Medium"
+                    ? styles.healthLevelMedium
+                    : styles.healthLevelHigh,
+                ]}
+              >
+                <Text style={styles.healthLevelText}>
+                  {report.health_level}
+                </Text>
+              </View>
+            </View>
+
+            <View style={styles.reportContentBox}>
+              <Text style={styles.contentBoxLabel}>Tình trạng sức khỏe:</Text>
+              <Text style={styles.contentBoxValue}>{report.health_status}</Text>
+            </View>
           </View>
 
-          <View style={styles.reportSection}>
-            <Text style={styles.reportSectionTitle}>Thông tin cá nhân</Text>
-            <Text style={styles.reportSectionValue}>
-              Email: {report.user_email}
-            </Text>
-            <Text style={styles.reportSectionValue}>
-              Phone: {report.user_phone}
-            </Text>
+          <View style={styles.divider} />
+
+          <View style={styles.contentSection}>
+            <View style={styles.sectionHeader}>
+              <Ionicons
+                name="document-text-outline"
+                size={24}
+                color="#3674B5"
+              />
+              <Text style={styles.sectionTitle}>KẾT QUẢ ĐÁNH GIÁ</Text>
+            </View>
+
+            <View style={styles.reportContentBox}>
+              <Text style={styles.contentBoxLabel}>Đánh giá chuyên môn:</Text>
+              <Text style={styles.contentBoxValue}>{report.feedback}</Text>
+            </View>
+
+            <View style={styles.reportContentBox}>
+              <Text style={styles.contentBoxLabel}>
+                Khuyến nghị & lời khuyên:
+              </Text>
+              <Text style={styles.contentBoxValue}>
+                {report.recommendations}
+              </Text>
+            </View>
           </View>
 
-          <View style={styles.reportSection}>
-            <Text style={styles.reportSectionTitle}>MỨC ĐỘ SỨC KHỎE</Text>
-            <Text style={styles.reportSectionValue}>{report.health_level}</Text>
-          </View>
-
-          <View style={styles.reportSection}>
-            <Text style={styles.reportSectionTitle}>Tình trạng sức khỏe</Text>
-            <Text style={styles.reportSectionValue}>
-              {report.health_status}
-            </Text>
-          </View>
-
-          <View style={styles.reportSection}>
-            <Text style={styles.reportSectionTitle}>ĐÁNH GIÁ</Text>
-            <Text style={styles.reportSectionValue}>{report.feedback}</Text>
-          </View>
-
-          <View style={styles.reportSection}>
-            <Text style={styles.reportSectionTitle}>GHI CHÚ</Text>
-            <Text style={styles.reportSectionValue}>
-              {report.recommendations}
-            </Text>
-          </View>
+          <View style={styles.divider} />
 
           <View style={styles.reportFooter}>
             <Text style={styles.reportFooterText}>
@@ -250,82 +333,182 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingVertical: 16,
     backgroundColor: "#FFF",
     borderBottomWidth: 1,
     borderBottomColor: "#EEE",
-    elevation: 2,
+    elevation: 3,
   },
   backButton: {
     padding: 8,
   },
   headerTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    color: "#333",
+    color: "#3674B5",
   },
   scrollView: {
     padding: 16,
   },
   reportCard: {
     backgroundColor: "#FFF",
-    borderRadius: 12,
-    padding: 20,
+    borderRadius: 16,
+    overflow: "hidden",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 6,
+    elevation: 4,
     marginBottom: 20,
+  },
+  reportHeaderBanner: {
+    backgroundColor: "#3674B5",
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    marginBottom: 15,
   },
   reportTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#28A745",
+    color: "#FFF",
     textAlign: "center",
-    marginBottom: 16,
   },
   reportRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingBottom: 8,
+    paddingHorizontal: 20,
+    paddingBottom: 15,
   },
   reportColumn: {
     flex: 1,
     alignItems: "center",
   },
+  iconLabelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 6,
+  },
   reportLabel: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "600",
-    color: "#333",
-    marginBottom: 4,
+    color: "#3674B5",
+    marginLeft: 5,
   },
   reportValue: {
     fontSize: 14,
+    color: "#333",
+    textAlign: "center",
+  },
+  divider: {
+    height: 1,
+    backgroundColor: "#EEE",
+    marginVertical: 15,
+    marginHorizontal: 20,
+  },
+  infoSection: {
+    paddingHorizontal: 20,
+    marginBottom: 15,
+  },
+  studentInfoHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  studentInfoTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#3674B5",
+    marginLeft: 8,
+  },
+  infoGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginHorizontal: -10,
+  },
+  infoItem: {
+    width: "50%",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  infoLabel: {
+    fontSize: 14,
     color: "#666",
+    marginBottom: 2,
   },
-  reportSection: {
-    marginBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ddd",
-    paddingBottom: 8,
+  infoValue: {
+    fontSize: 15,
+    color: "#333",
+    fontWeight: "500",
   },
-  reportSectionTitle: {
+  healthSection: {
+    paddingHorizontal: 20,
+    marginBottom: 15,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#3674B5",
+    marginLeft: 8,
+  },
+  healthLevelContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  healthLevelLabel: {
+    fontSize: 14,
+    color: "#666",
+    marginRight: 10,
+  },
+  healthLevelBadge: {
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 20,
+  },
+  healthLevelLow: {
+    backgroundColor: "#ffcccc",
+  },
+  healthLevelMedium: {
+    backgroundColor: "#fff2cc",
+  },
+  healthLevelHigh: {
+    backgroundColor: "#d9f2d9",
+  },
+  healthLevelText: {
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  reportContentBox: {
+    backgroundColor: "#f7f9fc",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
+  },
+  contentBoxLabel: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#333",
-    marginBottom: 4,
+    color: "#3674B5",
+    marginBottom: 8,
   },
-  reportSectionValue: {
+  contentBoxValue: {
     fontSize: 14,
-    color: "#666",
+    color: "#444",
     lineHeight: 20,
   },
+  contentSection: {
+    paddingHorizontal: 20,
+    marginBottom: 15,
+  },
   reportFooter: {
-    marginTop: 16,
+    backgroundColor: "#f7f9fc",
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#EEE",
   },
   reportFooterText: {
     fontSize: 12,
