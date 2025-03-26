@@ -38,3 +38,13 @@ export const getAppointmentSchedule = (userId: string) => {
 export const getProgramByUserId = (id: number) => {
   return api.get(`/api/program/user/${id}`);
 };
+
+export const cancelAppointment = (id: string) => {
+  return api.put(`/api/appointments/${id}`, { status: "Cancelled" });
+};
+
+export const getSurveyHistory = (userId: string) => {
+  return api.get(
+    `https://ssphis.onrender.com/api/survey-result/user/${userId}`
+  );
+};

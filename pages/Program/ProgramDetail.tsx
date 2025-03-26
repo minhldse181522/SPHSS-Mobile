@@ -1,4 +1,4 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
 import {
   Image,
@@ -8,11 +8,17 @@ import {
   Text,
   TouchableOpacity,
   View,
+  StatusBar,
+  Dimensions,
 } from "react-native";
 import { Program } from "../../models/program";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
 import { joinProgram } from "../../service/api";
+import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons, MaterialIcons, FontAwesome5 } from "@expo/vector-icons";
+
+const { width } = Dimensions.get("window");
 
 type ProgramDetailRouteProp = RouteProp<
   {
@@ -24,8 +30,10 @@ type ProgramDetailRouteProp = RouteProp<
 >;
 
 function ProgramDetail() {
+  const navigation = useNavigation();
   const route = useRoute<ProgramDetailRouteProp>();
   const { program } = route.params;
+
   const handleJoinProgram = async () => {
     try {
       const storeUser = await AsyncStorage.getItem("userData");
@@ -39,7 +47,6 @@ function ProgramDetail() {
         return;
       }
       const response = await joinProgram(user.id, program.programId);
-      console.log({ response });
 
       if (response.status === 201) {
         Toast.show({
@@ -50,148 +57,243 @@ function ProgramDetail() {
       }
     } catch (error) {
       console.error("Error joining program:", error);
+      Toast.show({
+        type: "error",
+        text1: "Có lỗi xảy ra khi tham gia chương trình!",
+        text1Style: { textAlign: "center", fontSize: 16 },
+      });
     }
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("vi-VN");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
+      <StatusBar
+        backgroundColor="transparent"
+        barStyle="light-content"
+        translucent
+      />
+
+      {/* Image Header with Gradient Overlay */}
+      <View style={styles.imageContainer}>
         <Image
           source={{ uri: program.imageUrl }}
           style={styles.image}
           defaultSource={require("../../assets/Psychologist.png")}
         />
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{program.name}</Text>
-            <View
-              style={[
-                styles.statusBadge,
-                { backgroundColor: program.status ? "#4CAF50" : "#FF5722" },
-              ]}
-            >
-              <TouchableOpacity onPress={handleJoinProgram}>
-                <Text
-                  style={{ color: "#fff", fontSize: 16, fontWeight: "500" }}
-                >
-                  Tham gia
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+        <LinearGradient
+          colors={["rgba(0,0,0,0.1)", "rgba(0,0,0,0.8)"]}
+          style={styles.imageGradient}
+        />
 
+        {/* Back Button */}
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+
+        {/* Program Basic Info */}
+        <View style={styles.headerInfo}>
+          <Text style={styles.title}>{program.name}</Text>
+          <View style={styles.headerMeta}>
+            <View style={styles.metaItem}>
+              <Ionicons name="calendar-outline" size={14} color="#fff" />
+              <Text style={styles.metaText}>
+                {formatDate(program.startDate)} - {formatDate(program.endDate)}
+              </Text>
+            </View>
+
+            {program.rating && (
+              <View style={styles.metaItem}>
+                <Ionicons name="star" size={14} color="#FFC107" />
+                <Text style={styles.metaText}>{program.rating} ⭐</Text>
+              </View>
+            )}
+          </View>
+        </View>
+      </View>
+
+      <ScrollView
+        style={styles.contentScroll}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.content}>
+          {/* Join Button */}
+          <TouchableOpacity
+            style={styles.joinButton}
+            onPress={handleJoinProgram}
+          >
+            <LinearGradient
+              colors={["#3674B5", "#2A5A8E"]}
+              style={styles.joinButtonGradient}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+            >
+              <Text style={styles.joinButtonText}>Tham gia chương trình</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+
+          {/* Description Section */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Description</Text>
+            <View style={styles.sectionHeader}>
+              <MaterialIcons name="description" size={20} color="#3674B5" />
+              <Text style={styles.sectionTitle}>Giới thiệu</Text>
+            </View>
             <Text style={styles.description}>{program.description}</Text>
           </View>
 
+          {/* Schedule & Location Section */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Duration</Text>
-            <View style={styles.dateContainer}>
-              <View style={styles.dateItem}>
-                <Text style={styles.dateLabel}>Start Date</Text>
-                <Text style={styles.dateValue}>
-                  {new Date(program.startDate).toLocaleDateString()}
-                </Text>
+            <View style={styles.sectionHeader}>
+              <MaterialIcons name="event" size={20} color="#3674B5" />
+              <Text style={styles.sectionTitle}>Lịch trình & Địa điểm</Text>
+            </View>
+
+            <View style={styles.infoGrid}>
+              <View style={styles.infoItem}>
+                <View style={styles.infoIcon}>
+                  <Ionicons name="time-outline" size={18} color="#3674B5" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Thời gian</Text>
+                  <Text style={styles.infoValue}>
+                    {program.time || "Linh hoạt"}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.dateItem}>
-                <Text style={styles.dateLabel}>End Date</Text>
-                <Text style={styles.dateValue}>
-                  {new Date(program.endDate).toLocaleDateString()}
-                </Text>
+
+              <View style={styles.infoItem}>
+                <View style={styles.infoIcon}>
+                  <Ionicons name="repeat" size={18} color="#3674B5" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Tần suất</Text>
+                  <Text style={styles.infoValue}>
+                    {program.frequency || "N/A"}
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.infoItem}>
+                <View style={styles.infoIcon}>
+                  <Ionicons name="location-outline" size={18} color="#3674B5" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Địa điểm</Text>
+                  <Text style={styles.infoValue}>
+                    {program.location || "Trực tuyến"}
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.infoItem}>
+                <View style={styles.infoIcon}>
+                  <Ionicons name="people-outline" size={18} color="#3674B5" />
+                </View>
+                <View style={styles.infoContent}>
+                  <Text style={styles.infoLabel}>Đối tượng</Text>
+                  <Text style={styles.infoValue}>
+                    {program.targetAudience || "Tất cả"}
+                  </Text>
+                </View>
               </View>
             </View>
           </View>
 
+          {/* Contact Information */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Additional Information</Text>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Created At</Text>
-              <Text style={styles.infoValue}>
-                {new Date(program.createdAt).toLocaleString()}
+            <View style={styles.sectionHeader}>
+              <MaterialIcons name="contact-phone" size={20} color="#3674B5" />
+              <Text style={styles.sectionTitle}>Thông tin liên hệ</Text>
+            </View>
+
+            <View style={styles.contactItem}>
+              <Ionicons name="mail-outline" size={18} color="#666" />
+              <Text style={styles.contactText}>{program.organizerEmail}</Text>
+            </View>
+
+            <View style={styles.contactItem}>
+              <Ionicons name="call-outline" size={18} color="#666" />
+              <Text style={styles.contactText}>{program.contactPhone}</Text>
+            </View>
+          </View>
+
+          {/* Price Section */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <MaterialIcons name="monetization-on" size={20} color="#3674B5" />
+              <Text style={styles.sectionTitle}>Chi phí</Text>
+            </View>
+            <View style={styles.priceContainer}>
+              <Text
+                style={[
+                  styles.priceText,
+                  program.price === "0" && styles.freeText,
+                ]}
+              >
+                {program.price === "0" ? "Miễn phí" : program.price}
               </Text>
             </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Last Updated</Text>
-              <Text style={styles.infoValue}>
-                {new Date(program.updatedAt).toLocaleString()}
-              </Text>
-            </View>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Schedule & Location</Text>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Time</Text>
-              <Text style={styles.infoValue}>{program.time}</Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Frequency</Text>
-              <Text style={styles.infoValue}>{program.frequency}</Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Location</Text>
-              <Text style={styles.infoValue}>{program.location}</Text>
-            </View>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Contact Information</Text>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Organizer Email</Text>
-              <Text style={styles.infoValue}>{program.organizerEmail}</Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Contact Phone</Text>
-              <Text style={styles.infoValue}>{program.contactPhone}</Text>
-            </View>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Program Details</Text>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Target Audience</Text>
-              <Text style={styles.infoValue}>{program.targetAudience}</Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Price</Text>
-              <Text style={styles.infoValue}>
-                {program.price === "0" ? "Free" : program.price}
-              </Text>
-            </View>
-            <View style={styles.infoItem}>
-              <Text style={styles.infoLabel}>Rating</Text>
-              <Text style={styles.infoValue}>{program.rating} ⭐</Text>
-            </View>
-          </View>
-
+          {/* Instructors Section */}
           {program.instructors && program.instructors.length > 0 && (
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Instructors</Text>
+              <View style={styles.sectionHeader}>
+                <MaterialIcons name="school" size={20} color="#3674B5" />
+                <Text style={styles.sectionTitle}>Giảng viên</Text>
+              </View>
+
               {program.instructors.map((instructor, index) => (
-                <View key={index} style={styles.instructorItem}>
-                  <Text style={styles.instructorName}>
-                    {instructor.instructorName}
-                  </Text>
-                  {instructor.instructorTitle && (
-                    <Text style={styles.instructorTitle}>
-                      {instructor.instructorTitle}
+                <View key={index} style={styles.instructorCard}>
+                  <View style={styles.instructorIcon}>
+                    <FontAwesome5 name="user-tie" size={20} color="#fff" />
+                  </View>
+                  <View style={styles.instructorContent}>
+                    <Text style={styles.instructorName}>
+                      {instructor.instructorName}
                     </Text>
-                  )}
-                  {instructor.instructorExperience && (
-                    <Text style={styles.instructorExperience}>
-                      {instructor.instructorExperience}
-                    </Text>
-                  )}
-                  {instructor.instructorDescription && (
-                    <Text style={styles.instructorDescription}>
-                      {instructor.instructorDescription}
-                    </Text>
-                  )}
+                    {instructor.instructorTitle && (
+                      <Text style={styles.instructorTitle}>
+                        {instructor.instructorTitle}
+                      </Text>
+                    )}
+                    {instructor.instructorExperience && (
+                      <Text style={styles.instructorExperience}>
+                        {instructor.instructorExperience}
+                      </Text>
+                    )}
+                    {instructor.instructorDescription && (
+                      <Text style={styles.instructorDescription}>
+                        {instructor.instructorDescription}
+                      </Text>
+                    )}
+                  </View>
                 </View>
               ))}
             </View>
           )}
+
+          {/* Additional Info */}
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <MaterialIcons name="info" size={20} color="#3674B5" />
+              <Text style={styles.sectionTitle}>Thông tin bổ sung</Text>
+            </View>
+            <View style={styles.additionalInfo}>
+              <Text style={styles.additionalInfoText}>
+                Chương trình được tạo vào {formatDate(program.createdAt)}
+              </Text>
+              <Text style={styles.additionalInfoText}>
+                Cập nhật gần nhất: {formatDate(program.updatedAt)}
+              </Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -201,108 +303,229 @@ function ProgramDetail() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F8F9FA",
+  },
+  imageContainer: {
+    height: 250,
+    width: "100%",
   },
   image: {
     width: "100%",
-    height: 250,
+    height: "100%",
     resizeMode: "cover",
   },
-  content: {
-    padding: 16,
+  imageGradient: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
     alignItems: "center",
-    marginBottom: 20,
+    justifyContent: "center",
+    zIndex: 10,
+  },
+  headerInfo: {
+    position: "absolute",
+    bottom: 16,
+    left: 16,
+    right: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#333",
-    flex: 1,
-    marginRight: 16,
-  },
-  statusBadge: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-  },
-  statusText: {
     color: "#fff",
+    marginBottom: 8,
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  headerMeta: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  metaItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginRight: 16,
+    marginBottom: 4,
+  },
+  metaText: {
     fontSize: 14,
-    fontWeight: "500",
+    color: "#fff",
+    marginLeft: 4,
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  contentScroll: {
+    flex: 1,
+  },
+  content: {
+    padding: 16,
+    paddingBottom: 32,
+  },
+  joinButton: {
+    marginBottom: 20,
+    borderRadius: 10,
+    overflow: "hidden",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  joinButtonGradient: {
+    paddingVertical: 14,
+    alignItems: "center",
+  },
+  joinButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   section: {
-    marginBottom: 24,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "600",
     color: "#333",
-    marginBottom: 12,
+    marginLeft: 8,
   },
   description: {
-    fontSize: 16,
+    fontSize: 15,
     color: "#666",
-    lineHeight: 24,
+    lineHeight: 22,
   },
-  dateContainer: {
+  infoGrid: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    flexWrap: "wrap",
+    marginHorizontal: -4,
   },
-  dateItem: {
+  infoItem: {
+    width: "50%",
+    paddingHorizontal: 4,
+    marginBottom: 16,
+    flexDirection: "row",
+  },
+  infoIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: "#E8F0FB",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+  },
+  infoContent: {
     flex: 1,
   },
-  dateLabel: {
-    fontSize: 14,
+  infoLabel: {
+    fontSize: 12,
     color: "#666",
-    marginBottom: 4,
+    marginBottom: 2,
   },
-  dateValue: {
-    fontSize: 16,
+  infoValue: {
+    fontSize: 14,
     color: "#333",
     fontWeight: "500",
   },
-  infoItem: {
+  contactItem: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 12,
   },
-  infoLabel: {
+  contactText: {
     fontSize: 14,
     color: "#666",
-    marginBottom: 4,
+    marginLeft: 12,
   },
-  infoValue: {
-    fontSize: 16,
-    color: "#333",
-  },
-  instructorItem: {
-    marginBottom: 16,
-    padding: 12,
-    backgroundColor: "#f5f5f5",
+  priceContainer: {
+    padding: 10,
+    backgroundColor: "#E8F0FB",
     borderRadius: 8,
+    alignSelf: "flex-start",
+  },
+  priceText: {
+    fontSize: 16,
+    color: "#3674B5",
+    fontWeight: "bold",
+  },
+  freeText: {
+    color: "#4CAF50",
+  },
+  instructorCard: {
+    flexDirection: "row",
+    marginBottom: 16,
+    backgroundColor: "#F8F9FA",
+    padding: 12,
+    borderRadius: 8,
+  },
+  instructorIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "#3674B5",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 12,
+  },
+  instructorContent: {
+    flex: 1,
   },
   instructorName: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "bold",
     color: "#333",
     marginBottom: 4,
   },
   instructorTitle: {
     fontSize: 14,
-    color: "#666",
+    color: "#3674B5",
+    fontWeight: "500",
     marginBottom: 4,
   },
   instructorExperience: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#666",
     marginBottom: 4,
   },
   instructorDescription: {
-    fontSize: 14,
+    fontSize: 13,
     color: "#666",
-    fontStyle: "italic",
+    lineHeight: 18,
+  },
+  additionalInfo: {
+    backgroundColor: "#F8F9FA",
+    padding: 12,
+    borderRadius: 8,
+  },
+  additionalInfoText: {
+    fontSize: 13,
+    color: "#666",
+    marginBottom: 4,
   },
 });
 

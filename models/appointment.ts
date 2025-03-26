@@ -11,3 +11,17 @@ export interface Appointment {
     email: string;
   };
 }
+export interface Appointmentt {
+  appointment_id: string;
+  firstNamePys: string;
+  lastNamePys: string;
+  status: string;
+  date: string;
+  start_time: string;
+  end_time: string;
+  linkMeeting?: string;
+}
+export interface AppointmentUpdateValue {
+  status: string;
+  linkMeeting?: string;
+}
