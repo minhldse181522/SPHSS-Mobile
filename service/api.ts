@@ -44,7 +44,8 @@ export const cancelAppointment = (id: string) => {
 };
 
 export const getSurveyHistory = (userId: string) => {
-  return api.get(
-    `https://ssphis.onrender.com/api/survey-result/user/${userId}`
-  );
+  return api.get(`/api/survey-result/user/${userId}`);
+};
+export const getReports = () => {
+  return api.get("/api/reports");
 };
