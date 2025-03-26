@@ -17,6 +17,7 @@ import api from "../../config/axios";
 import { LinearGradient } from "expo-linear-gradient";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
+import { formatDate } from "../../utils/dateUtils";
 
 type RootStackParamList = {
   SurveyDetail: { surveyId: string };
@@ -128,7 +129,6 @@ const SurveyHistory: React.FC = () => {
     }
     return "Kết quả của bạn ở mức báo động. Bạn cần tìm đến chuyên gia tâm lý ngay lập tức!";
   };
-  console.log("data", data);
 
   const renderItem = ({ item }: { item: SurveyResult }) => (
     <TouchableOpacity
@@ -143,7 +143,7 @@ const SurveyHistory: React.FC = () => {
         <View style={styles.cardHeader}>
           <Text style={styles.programName}>{item.survey.title}</Text>
           <View style={styles.dateContainer}>
-            <Text style={styles.dateText}>{item.createdAt}</Text>
+            <Text style={styles.dateText}>{formatDate(item.createdAt)}</Text>
           </View>
         </View>
         <View style={styles.cardFooter}>
@@ -350,6 +350,8 @@ const styles = StyleSheet.create({
   },
   cardGradient: {
     padding: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   cardHeader: {
     marginBottom: 12,
