@@ -1,11 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import {
   Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -27,6 +30,7 @@ interface UserData {
 
 function ProfilePage() {
   const [userData, setUserData] = useState<UserData | null>(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -54,12 +58,17 @@ function ProfilePage() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
         <View style={styles.header}>
-          <Image
-            source={{ uri: userData.image }}
-            style={styles.profileImage}
-          />
-          <Text style={styles.name}>{`${userData.firstName} ${userData.lastName}`}</Text>
+          <Image source={{ uri: userData.image }} style={styles.profileImage} />
+          <Text
+            style={styles.name}
+          >{`${userData.firstName} ${userData.lastName}`}</Text>
           <Text style={styles.username}>@{userData.username}</Text>
         </View>
 
@@ -137,6 +146,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
     fontWeight: "500",
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 10,
   },
 });
 
