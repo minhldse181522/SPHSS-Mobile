@@ -15,6 +15,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  StatusBar,
+  Dimensions,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import { Appointment } from "../../models/appointment";
@@ -24,6 +26,15 @@ import {
 } from "../../service/booking/api";
 import { RootStackParamList } from "../../utils/routes";
 import DatePicker from "react-native-date-picker";
+import { LinearGradient } from "expo-linear-gradient";
+import {
+  Ionicons,
+  FontAwesome,
+  MaterialIcons,
+  Feather,
+} from "@expo/vector-icons";
+
+const { width } = Dimensions.get("window");
 
 interface User {
   id: number;
@@ -74,10 +85,19 @@ const PsyDetail: React.FC<PsyDetailProps> = ({ route, navigation }) => {
     fetchUserData();
   }, []);
 
-  const renderStars = () => {
+  const renderStars = (rating = 5) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
-      stars.push(<AntDesign key={i} name="star" size={24} color="#27548A" />);
+      const color = i < rating ? "#FFC107" : "#E0E0E0";
+      stars.push(
+        <AntDesign
+          key={i}
+          name="star"
+          size={16}
+          color={color}
+          style={{ marginRight: 2 }}
+        />
+      );
     }
     return <View style={styles.starsContainer}>{stars}</View>;
   };
@@ -151,147 +171,299 @@ const PsyDetail: React.FC<PsyDetailProps> = ({ route, navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        {/* Phần bác sĩ */}
-        <View style={{ padding: 5 }}>
-          <View style={styles.doctorCard}>
+      <StatusBar backgroundColor="#3674B5" barStyle="light-content" />
+
+      {/* Header */}
+      <LinearGradient colors={["#3674B5", "#2A5A8E"]} style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Thông tin chuyên gia</Text>
+        <View style={styles.headerRight} />
+      </LinearGradient>
+
+      <ScrollView
+        style={styles.scrollView}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Doctor Profile */}
+        <View style={styles.profileCard}>
+          <View style={styles.profileHeader}>
             <Image
               source={{ uri: doctor.image }}
-              style={{ width: 100, height: 100, borderRadius: 100 }}
+              style={styles.doctorImage}
+              defaultSource={require("../../assets/Psychologist.png")}
             />
-            <View>
-              <Text style={{ marginTop: 10, fontSize: 18, marginLeft: 20 }}>
+            <View style={styles.profileInfo}>
+              <Text style={styles.doctorName}>
                 {doctor.firstName + " " + doctor.lastName}
               </Text>
-              <Text style={{ marginTop: 5, fontSize: 18, marginLeft: 20 }}>
-                Chuyên viên tư vấn tâm lý
-              </Text>
+              <Text style={styles.doctorSpecialty}>Chuyên gia tâm lý</Text>
               {renderStars()}
             </View>
           </View>
+
+          <View style={styles.profileStats}>
+            <View style={styles.statItem}>
+              <FontAwesome name="briefcase" size={18} color="#3674B5" />
+              <Text style={styles.statValue}>15+</Text>
+              <Text style={styles.statLabel}>Năm kinh nghiệm</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.statItem}>
+              <FontAwesome name="users" size={18} color="#3674B5" />
+              <Text style={styles.statValue}>1000+</Text>
+              <Text style={styles.statLabel}>Khách hàng</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.statItem}>
+              <FontAwesome name="certificate" size={18} color="#3674B5" />
+              <Text style={styles.statValue}>100%</Text>
+              <Text style={styles.statLabel}>Chứng nhận</Text>
+            </View>
+          </View>
         </View>
 
-        {/* Phần lịch hẹn  */}
-        <View style={{ padding: 5, marginTop: 5 }}>
-          <View style={styles.appointmentCard}>
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                marginBottom: 10,
-              }}
-            >
-              <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-                Lịch tư vấn
-              </Text>
-              <Text
-                style={{ color: "#ec744a", fontSize: 18, fontWeight: "bold" }}
-              >
-                60 Phút
+        {/* About Section */}
+        <View style={styles.sectionCard}>
+          <Text style={styles.sectionTitle}>Giới thiệu</Text>
+          <Text style={styles.sectionContent}>
+            Với hơn 15 năm kinh nghiệm trong lĩnh vực tâm lý học lâm sàng,
+            {doctor.firstName + " " + doctor.lastName} chuyên tư vấn và hỗ trợ
+            các vấn đề về sức khỏe tinh thần như lo âu, trầm cảm, căng thẳng, và
+            các vấn đề liên quan đến mối quan hệ.
+          </Text>
+        </View>
+
+        {/* Specialties Section */}
+        <View style={styles.sectionCard}>
+          <Text style={styles.sectionTitle}>Chuyên môn</Text>
+          <View style={styles.specialtiesList}>
+            <View style={styles.specialtyItem}>
+              <MaterialIcons name="check-circle" size={18} color="#4CAF50" />
+              <Text style={styles.specialtyText}>Tâm lý học lâm sàng</Text>
+            </View>
+            <View style={styles.specialtyItem}>
+              <MaterialIcons name="check-circle" size={18} color="#4CAF50" />
+              <Text style={styles.specialtyText}>
+                Điều trị lo âu và trầm cảm
               </Text>
             </View>
-            <TextInput
-              style={styles.input}
-              value={`${daysOfWeek[dayjs().day()]} ${dayjs().format("DD/MM")}`}
-              editable={false}
-            />
-            <View style={styles.appointmentListContainer}>
-              {appointment.map((item) => (
+            <View style={styles.specialtyItem}>
+              <MaterialIcons name="check-circle" size={18} color="#4CAF50" />
+              <Text style={styles.specialtyText}>
+                Tư vấn tâm lý cho thanh thiếu niên
+              </Text>
+            </View>
+            <View style={styles.specialtyItem}>
+              <MaterialIcons name="check-circle" size={18} color="#4CAF50" />
+              <Text style={styles.specialtyText}>Quản lý căng thẳng</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Appointment Section */}
+        <View style={styles.sectionCard}>
+          <View style={styles.appointmentHeader}>
+            <Text style={styles.sectionTitle}>Lịch tư vấn</Text>
+            <View style={styles.durationBadge}>
+              <Feather name="clock" size={14} color="#FF7043" />
+              <Text style={styles.durationText}>60 phút</Text>
+            </View>
+          </View>
+
+          <View style={styles.dateSelector}>
+            <Text style={styles.dateLabel}>Ngày tư vấn</Text>
+            <View style={styles.dateDisplay}>
+              <Feather
+                name="calendar"
+                size={18}
+                color="#3674B5"
+                style={styles.dateIcon}
+              />
+              <Text style={styles.dateText}>
+                {`${daysOfWeek[dayjs().day()]} ${dayjs().format("DD/MM/YYYY")}`}
+              </Text>
+            </View>
+          </View>
+
+          <Text style={styles.timeSlotLabel}>Thời gian có sẵn</Text>
+
+          <View style={styles.timeSlotGrid}>
+            {appointment.length > 0 ? (
+              appointment.map((item) => (
                 <TouchableOpacity
                   key={item.time_slot_id.toString()}
-                  style={styles.appointmentOption}
+                  style={[
+                    styles.timeSlot,
+                    selectedAppointment?.time_slot_id === item.time_slot_id &&
+                      styles.selectedTimeSlot,
+                  ]}
                   onPress={() => handleSelectAppointment(item)}
                 >
-                  <View style={styles.appointmentInfo}>
-                    <Text>{item.start_time + " - " + item.end_time}</Text>
-                  </View>
+                  <Text
+                    style={[
+                      styles.timeSlotText,
+                      selectedAppointment?.time_slot_id === item.time_slot_id &&
+                        styles.selectedTimeSlotText,
+                    ]}
+                  >
+                    {item.start_time + " - " + item.end_time}
+                  </Text>
                 </TouchableOpacity>
-              ))}
-            </View>
+              ))
+            ) : (
+              <Text style={styles.noSlotsText}>
+                Không có lịch trống cho ngày hôm nay
+              </Text>
+            )}
           </View>
         </View>
+      </ScrollView>
 
-        <Modal visible={modalVisible} transparent animationType="slide">
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
+      {/* Book Now Button */}
+      <View style={styles.bottomBar}>
+        <TouchableOpacity
+          style={[
+            styles.bookButton,
+            !selectedAppointment && styles.disabledButton,
+          ]}
+          disabled={!selectedAppointment}
+          onPress={() => selectedAppointment && setModalVisible(true)}
+        >
+          <LinearGradient
+            colors={["#3674B5", "#2A5A8E"]}
+            style={styles.bookButtonGradient}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 0 }}
+          >
+            <Text style={styles.bookButtonText}>
+              {selectedAppointment
+                ? "Đặt lịch ngay"
+                : "Vui lòng chọn thời gian"}
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
+
+      {/* Booking Confirmation Modal */}
+      <Modal
+        visible={modalVisible}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Xác nhận lịch hẹn</Text>
-              <Text style={{ fontSize: 18, marginBottom: 10 }}>
-                Bác sĩ: {doctor.firstName} {doctor.lastName}
-              </Text>
-              <Text style={{ fontSize: 18, marginBottom: 10 }}>
-                Thời gian: {selectedAppointment?.start_time} -{" "}
-                {selectedAppointment?.end_time}
-              </Text>
-              <Text style={{ fontSize: 18, marginBottom: 10 }}>
-                Khách hàng:{" "}
-                {user ? `${user.firstName} ${user.lastName}` : "Loading..."}
-              </Text>
-              <Text style={{ fontSize: 18, marginBottom: 10 }}>
-                Điện thoại: {user ? user.phone : "N/A"}
-              </Text>
-              <Text style={{ fontSize: 18, marginBottom: 10 }}>
-                Email: {user ? user.email : "N/A"}
-              </Text>
-              <TextInput
-                style={styles.inputModal}
-                value={selectedDate}
-                editable={false}
-              />
-              <View style={styles.dateButtonsContainer}>
-                <TouchableOpacity
-                  style={[
-                    styles.dateButton,
-                    dayjs(selectedDate).isSameOrBefore(currentDate, "day") &&
-                      styles.disabledButton, // Vô hiệu hóa khi bằng ngày hiện tại
-                  ]}
-                  onPress={() => {
-                    if (
-                      !dayjs(selectedDate).isSameOrBefore(currentDate, "day")
-                    ) {
-                      setSelectedDate(
-                        dayjs(selectedDate)
-                          .subtract(1, "day")
-                          .format("YYYY-MM-DD")
-                      );
-                    }
-                  }}
-                  disabled={dayjs(selectedDate).isSameOrBefore(
-                    currentDate,
-                    "day"
-                  )}
-                >
-                  <Text style={styles.dateButtonText}>Giảm ngày</Text>
-                </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <AntDesign name="close" size={24} color="#666" />
+              </TouchableOpacity>
+            </View>
 
-                <TouchableOpacity
-                  style={styles.dateButton}
-                  onPress={() =>
-                    setSelectedDate(
-                      dayjs(selectedDate).add(1, "day").format("YYYY-MM-DD")
-                    )
-                  }
-                >
-                  <Text style={styles.dateButtonText}>Tăng ngày</Text>
-                </TouchableOpacity>
+            <View style={styles.modalBody}>
+              <View style={styles.confirmationItem}>
+                <Text style={styles.confirmationLabel}>Chuyên gia:</Text>
+                <Text style={styles.confirmationValue}>
+                  {doctor.firstName} {doctor.lastName}
+                </Text>
               </View>
-              <View style={styles.modalButtons}>
-                <TouchableOpacity
-                  style={[styles.modalButton, styles.cancelButton]}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.buttonText}>Hủy</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.modalButton, styles.confirmButton]}
-                  onPress={handleConfirm}
-                >
-                  <Text style={styles.buttonText}>Xác nhận</Text>
-                </TouchableOpacity>
+
+              <View style={styles.confirmationItem}>
+                <Text style={styles.confirmationLabel}>Thời gian:</Text>
+                <Text style={styles.confirmationValue}>
+                  {selectedAppointment?.start_time} -{" "}
+                  {selectedAppointment?.end_time}
+                </Text>
+              </View>
+
+              <View style={styles.confirmationItem}>
+                <Text style={styles.confirmationLabel}>Khách hàng:</Text>
+                <Text style={styles.confirmationValue}>
+                  {user ? `${user.firstName} ${user.lastName}` : "Đang tải..."}
+                </Text>
+              </View>
+
+              <View style={styles.confirmationItem}>
+                <Text style={styles.confirmationLabel}>Điện thoại:</Text>
+                <Text style={styles.confirmationValue}>
+                  {user ? user.phone : "N/A"}
+                </Text>
+              </View>
+
+              <View style={styles.confirmationItem}>
+                <Text style={styles.confirmationLabel}>Email:</Text>
+                <Text style={styles.confirmationValue}>
+                  {user ? user.email : "N/A"}
+                </Text>
+              </View>
+
+              <View style={styles.datePickerContainer}>
+                <Text style={styles.datePickerLabel}>Chọn ngày:</Text>
+                <TextInput
+                  style={styles.datePickerInput}
+                  value={selectedDate}
+                  editable={false}
+                />
+                <View style={styles.dateButtonsContainer}>
+                  <TouchableOpacity
+                    style={[
+                      styles.dateButton,
+                      dayjs(selectedDate).isSameOrBefore(currentDate, "day") &&
+                        styles.disabledDateButton,
+                    ]}
+                    onPress={() => {
+                      if (
+                        !dayjs(selectedDate).isSameOrBefore(currentDate, "day")
+                      ) {
+                        setSelectedDate(
+                          dayjs(selectedDate)
+                            .subtract(1, "day")
+                            .format("YYYY-MM-DD")
+                        );
+                      }
+                    }}
+                  >
+                    <Text style={styles.dateButtonText}>Hôm trước</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.dateButton}
+                    onPress={() => {
+                      setSelectedDate(
+                        dayjs(selectedDate).add(1, "day").format("YYYY-MM-DD")
+                      );
+                    }}
+                  >
+                    <Text style={styles.dateButtonText}>Hôm sau</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
+
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={handleConfirm}
+            >
+              <LinearGradient
+                colors={["#4CAF50", "#388E3C"]}
+                style={styles.confirmButtonGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+              >
+                <Text style={styles.confirmButtonText}>Xác nhận đặt lịch</Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
-        </Modal>
-      </ScrollView>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -299,189 +471,330 @@ const PsyDetail: React.FC<PsyDetailProps> = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#F8F9FA",
   },
-  doctorCard: {
-    padding: 12,
-    display: "flex",
+  header: {
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
     flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#ffffff",
+  },
+  headerRight: {
+    width: 40,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  profileCard: {
     backgroundColor: "#fff",
-    borderRadius: 12,
-    marginBottom: 16,
+    borderRadius: 16,
+    margin: 16,
+    padding: 16,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 3,
-    overflow: "hidden",
+    elevation: 2,
+  },
+  profileHeader: {
+    flexDirection: "row",
+    marginBottom: 16,
+  },
+  doctorImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+  },
+  profileInfo: {
+    marginLeft: 16,
+    flex: 1,
+    justifyContent: "center",
+  },
+  doctorName: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 4,
+  },
+  doctorSpecialty: {
+    fontSize: 14,
+    color: "#3674B5",
+    marginBottom: 6,
+    fontWeight: "500",
   },
   starsContainer: {
-    marginTop: 5,
-    marginLeft: 20,
-    fontSize: 18,
     flexDirection: "row",
+  },
+  profileStats: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#F0F0F0",
+  },
+  statItem: {
+    flex: 1,
+    alignItems: "center",
+  },
+  statDivider: {
+    width: 1,
+    backgroundColor: "#F0F0F0",
+  },
+  statValue: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#333",
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  statLabel: {
+    fontSize: 12,
+    color: "#666",
+  },
+  sectionCard: {
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    padding: 16,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 12,
+  },
+  sectionContent: {
+    fontSize: 14,
+    color: "#666",
+    lineHeight: 22,
+  },
+  specialtiesList: {
+    marginTop: 8,
+  },
+  specialtyItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  specialtyText: {
+    fontSize: 14,
+    color: "#333",
+    marginLeft: 10,
+  },
+  appointmentHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  durationBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFF3E0",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 16,
+  },
+  durationText: {
+    color: "#FF7043",
+    fontSize: 14,
+    fontWeight: "500",
+    marginLeft: 6,
+  },
+  dateSelector: {
+    marginBottom: 16,
+  },
+  dateLabel: {
+    fontSize: 14,
+    color: "#666",
     marginBottom: 8,
   },
-  appointmentCard: {
-    padding: 12,
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    overflow: "hidden",
-  },
-  input: {
-    width: 360,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    backgroundColor: "#f8f9fa",
-    marginBottom: 15,
-  },
-  appointmentListContainer: {
+  dateDisplay: {
     flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
-    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: "#E8F0FB",
+    padding: 12,
+    borderRadius: 8,
   },
-  appointmentOption: {
-    width: 110,
+  dateIcon: {
     marginRight: 8,
   },
-  appointmentInfo: {
-    display: "flex",
+  dateText: {
+    fontSize: 14,
+    color: "#333",
+  },
+  timeSlotLabel: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 8,
+  },
+  timeSlotGrid: {
     flexDirection: "row",
-    justifyContent: "center",
-    padding: 10,
-    backgroundColor: "#f8f9fa",
-    borderRadius: 12,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    flexWrap: "wrap",
+    marginHorizontal: -4,
+  },
+  timeSlot: {
+    backgroundColor: "#E8F0FB",
+    borderRadius: 8,
+    padding: 12,
+    margin: 4,
+    width: (width - 32 - 32 - 8) / 3, // (screen width - horizontal margins - padding - gaps) / 3 items
+    alignItems: "center",
+  },
+  selectedTimeSlot: {
+    backgroundColor: "#3674B5",
+  },
+  timeSlotText: {
+    fontSize: 12,
+    color: "#3674B5",
+    fontWeight: "500",
+  },
+  selectedTimeSlotText: {
+    color: "#fff",
+  },
+  noSlotsText: {
+    fontSize: 14,
+    color: "#666",
+    fontStyle: "italic",
+    padding: 12,
+    textAlign: "center",
+    width: "100%",
+  },
+  bottomBar: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderTopWidth: 1,
+    borderTopColor: "#F0F0F0",
+  },
+  bookButton: {
+    borderRadius: 10,
     overflow: "hidden",
   },
-  modalButtons: {
-    flexDirection: "row",
-    gap: 10,
-    marginTop: 20,
+  bookButtonGradient: {
+    padding: 16,
+    alignItems: "center",
   },
-  inputModal: {
-    textAlign: "center",
-    fontSize: 18,
-    width: 200,
-    padding: 5,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    backgroundColor: "#f8f9fa",
+  bookButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  disabledButton: {
+    opacity: 0.7,
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.6)", // Làm tối nền xung quanh modal
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
     backgroundColor: "#fff",
-    padding: 25,
-    borderRadius: 15,
-    width: "85%",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    maxHeight: "80%",
+  },
+  modalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    marginBottom: 16,
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 15,
-    color: "#27548A", // Màu sắc chủ đạo
-    textAlign: "center",
+    color: "#333",
   },
-  modalButton: {
+  closeButton: {
+    padding: 4,
+  },
+  modalBody: {
+    marginBottom: 20,
+  },
+  confirmationItem: {
+    flexDirection: "row",
+    marginBottom: 16,
+  },
+  confirmationLabel: {
+    width: 100,
+    fontSize: 14,
+    color: "#666",
+  },
+  confirmationValue: {
     flex: 1,
-    paddingVertical: 12,
-    marginHorizontal: 5,
-    borderRadius: 10,
-    alignItems: "center",
+    fontSize: 14,
+    color: "#333",
+    fontWeight: "500",
   },
-  cancelButton: {
-    backgroundColor: "#e74c3c",
+  datePickerContainer: {
+    marginTop: 8,
   },
-  confirmButton: {
-    backgroundColor: "#2ecc71",
+  datePickerLabel: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 8,
   },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#fff",
-  },
-  increaseDateButton: {
-    marginTop: 15,
-    backgroundColor: "#3498db", // Màu xanh dương đẹp
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8, // Bo góc nhẹ
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5, // Tạo hiệu ứng nổi trên Android
-  },
-  increaseDateButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
-    textTransform: "uppercase",
+  datePickerInput: {
+    backgroundColor: "#F0F0F0",
+    padding: 12,
+    borderRadius: 8,
+    fontSize: 14,
+    color: "#333",
+    marginBottom: 8,
   },
   dateButtonsContainer: {
     flexDirection: "row",
-    justifyContent: "center",
-    gap: 10,
-    marginTop: 15,
+    justifyContent: "space-between",
   },
   dateButton: {
-    backgroundColor: "#3498db",
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    backgroundColor: "#3674B5",
+    paddingHorizontal: 16,
+    paddingVertical: 10,
     borderRadius: 8,
+    flex: 0.48,
     alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 5,
+  },
+  disabledDateButton: {
+    backgroundColor: "#B0BEC5",
   },
   dateButtonText: {
     color: "#fff",
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  confirmButton: {
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  confirmButtonGradient: {
+    padding: 16,
+    alignItems: "center",
+  },
+  confirmButtonText: {
+    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
-    textTransform: "uppercase",
-  },
-  disabledButton: {
-    backgroundColor: "#bdc3c7", // Xám nhạt khi bị vô hiệu hóa
-    elevation: 0, // Không có bóng đổ
   },
 });
 

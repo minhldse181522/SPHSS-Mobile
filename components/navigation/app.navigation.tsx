@@ -1,26 +1,38 @@
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Pressable, Text } from "react-native";
-import HomePage from "../../pages/Home";
-import ProfilePage from "../../pages/Profile";
-import PsyPage from "../../pages/Psy";
-import SurveyPage from "../../pages/Survey";
-import { RootStackParamList } from "../../utils/routes";
-import ProgramPage from "../../pages/Program";
-import { useNavigation } from "@react-navigation/native";
-import { NavigationProps } from "../../pages/Login";
-import ProgramDetail from "../../pages/Program/ProgramDetail";
-import PsyDetail from "../../pages/Psy/PsyDetail";
-import SurveyDetail from "../../pages/SurveyDetail";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import { Pressable, Text, View } from "react-native";
+import ChatAppPage from "../../pages/Chat";
 import AppointmentSchedule from "../../pages/History/AppointmentSchedule";
+import AppointmentReport from "../../pages/History/AppointmentReport";
 import ProgramHistory from "../../pages/History/ProgramHistory";
 import SurveyHistory from "../../pages/History/SurveyHistory";
+import HomePage from "../../pages/Home";
+import { NavigationProps } from "../../pages/Login";
+import ProfilePage from "../../pages/Profile";
+import ProgramPage from "../../pages/Program";
+import ProgramDetail from "../../pages/Program/ProgramDetail";
+import PsyPage from "../../pages/Psy";
+import PsyDetail from "../../pages/Psy/PsyDetail";
+import SurveyPage from "../../pages/Survey";
+import SurveyDetail from "../../pages/SurveyDetail";
+import {
+  DrawerParamList,
+  HistoryTabParamList,
+  RootStackParamList,
+  TabParamList,
+} from "../../utils/routes";
 
+export type AppStackParamList = {
+  Login: undefined;
+  AppNavigation: undefined;
+};
 
 const HomeLayout = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -41,12 +53,13 @@ const HomeLayout = () => {
     </Stack.Navigator>
   );
 };
+
 const ProgramLayout = () => {
-  const Stack = createNativeStackNavigator();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Program"
+        name="program"
         component={ProgramPage}
         options={{ headerShown: false }}
       />
@@ -95,48 +108,96 @@ const SurveyLayout = () => {
     </Stack.Navigator>
   );
 };
-const HisotryLayout = () => {
-  const Tab = createMaterialTopTabNavigator();
+
+const HistoryLayout = () => {
+  const Tab = createMaterialTopTabNavigator<HistoryTabParamList>();
+  const Stack = createNativeStackNavigator();
+
+  const HistoryTabs = () => {
+    return (
+      <View style={{ flex: 1, backgroundColor: "#F8F9FA" }}>
+        <View
+          style={{
+            backgroundColor: "#3674B5",
+            paddingTop: 40,
+            paddingBottom: 16,
+            paddingHorizontal: 16,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 22,
+              fontWeight: "bold",
+              color: "#fff",
+              marginBottom: 8,
+            }}
+          >
+            Lịch sử hoạt động
+          </Text>
+        </View>
+        <Tab.Navigator
+          screenOptions={{
+            tabBarActiveTintColor: "#3674B5",
+            tabBarInactiveTintColor: "gray",
+            tabBarStyle: {
+              backgroundColor: "#fff",
+            },
+            tabBarIndicatorStyle: {
+              backgroundColor: "#3674B5",
+              height: 3,
+            },
+            tabBarLabelStyle: {
+              fontSize: 14,
+              fontWeight: "600",
+              textTransform: "none",
+            },
+          }}
+        >
+          <Tab.Screen
+            name="SurveyHistory"
+            component={SurveyHistory}
+            options={{ title: "Khảo sát" }}
+          />
+          <Tab.Screen
+            name="ProgramHistory"
+            component={ProgramHistory}
+            options={{ title: "Chương trình" }}
+          />
+          <Tab.Screen
+            name="AppointmentSchedule"
+            component={AppointmentSchedule}
+            options={{ title: "Lịch hẹn" }}
+          />
+        </Tab.Navigator>
+      </View>
+    );
+  };
+
   return (
-    <Tab.Navigator
-      screenOptions={{
-        tabBarActiveTintColor: "#007AFF",
-        tabBarInactiveTintColor: "gray",
-        tabBarStyle: {
-          backgroundColor: "#fff",
-        },
-        tabBarIndicatorStyle: {
-          backgroundColor: "#007AFF",
-          height: 3,
-        },
-        tabBarLabelStyle: {
-          fontSize: 14,
-          fontWeight: "600",
-          textTransform: "none",
-        },
-      }}
-    >
-      <Tab.Screen
-        name="SurveyHistory"
-        component={SurveyHistory}
-        options={{ title: "Lịch sử khảo sát" }}
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HistoryTabs"
+        component={HistoryTabs}
+        options={{ headerShown: false }}
       />
-      <Tab.Screen
-        name="ProgramHistory"
-        component={ProgramHistory}
-        options={{ title: "Lịch sử chương trình" }}
+      <Stack.Screen
+        name="ProgramDetail"
+        component={ProgramDetail}
+        options={{ headerShown: false }}
       />
-      <Tab.Screen
-        name="AppointmentSchedule"
-        component={AppointmentSchedule}
-        options={{ title: "Lịch hẹn khám" }}
+      <Stack.Screen
+        name="AppointmentReport"
+        component={AppointmentReport}
+        options={{ headerShown: false }}
       />
-    </Tab.Navigator>
+    </Stack.Navigator>
   );
 };
 
 const BottomTabNavigation = () => {
-  const Tab = createBottomTabNavigator();
+  const Tab = createBottomTabNavigator<TabParamList>();
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -150,15 +211,17 @@ const BottomTabNavigation = () => {
         name="Home"
         component={HomeLayout}
         options={{
-          tabBarIcon: () => <AntDesign name="home" size={24} color="black" />,
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
         name="Survey"
         component={SurveyLayout}
         options={{
-          tabBarIcon: () => (
-            <AntDesign name="profile" size={24} color="black" />
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="profile" size={size} color={color} />
           ),
           title: "Khảo sát",
         }}
@@ -167,25 +230,51 @@ const BottomTabNavigation = () => {
         name="Psychologist"
         component={PsyLayout}
         options={{
-          tabBarIcon: () => (
-            <MaterialIcons name="schedule" size={24} color="black" />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="schedule" size={size} color={color} />
           ),
           title: "Đặt lịch",
         }}
       />
-
+      <Tab.Screen
+        name="History"
+        component={HistoryLayout}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="time-outline" size={size} color={color} />
+          ),
+          title: "Lịch sử",
+        }}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={View}
+        listeners={{
+          tabPress: (e) => {
+            // Prevent default behavior
+            e.preventDefault();
+            // @ts-ignore
+            navigation.openDrawer();
+          },
+        }}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <Entypo name="menu" size={24} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
 
 function AppNavigation() {
-  const Drawer = createDrawerNavigator();
+  const Drawer = createDrawerNavigator<DrawerParamList>();
   const navigation = useNavigation<NavigationProps>();
   return (
     <>
       <Drawer.Navigator
         screenOptions={{
-          // headerShown: false,
+          headerShown: false,
           drawerItemStyle: {
             backgroundColor: "#9dd3c8",
             borderColor: "black",
@@ -220,8 +309,8 @@ function AppNavigation() {
                       backgroundColor: pressed
                         ? "#f0f0f0"
                         : props.state.index === index
-                          ? "#A1E3F9"
-                          : "transparent",
+                        ? "#A1E3F9"
+                        : "transparent",
                       borderRadius: 8,
                     })}
                   >
@@ -268,8 +357,6 @@ function AppNavigation() {
           name="HomeTabs"
           component={BottomTabNavigation}
           options={{
-            headerStyle: { backgroundColor: "#3674B5" },
-            headerTintColor: "#fff",
             title: "Home",
           }}
         />
@@ -277,8 +364,6 @@ function AppNavigation() {
           name="Program"
           component={ProgramLayout}
           options={{
-            headerStyle: { backgroundColor: "#3674B5" },
-            headerTintColor: "#fff",
             title: "Chương trình",
           }}
         />
@@ -286,18 +371,14 @@ function AppNavigation() {
           name="Profile"
           component={ProfilePage}
           options={{
-            headerStyle: { backgroundColor: "#3674B5" },
-            headerTintColor: "#fff",
             title: "Thông tin hồ sơ",
           }}
         />
         <Drawer.Screen
-          name="History"
-          component={HisotryLayout}
+          name="ChatApp"
+          component={ChatAppPage}
           options={{
-            headerStyle: { backgroundColor: "#3674B5" },
-            headerTintColor: "#fff",
-            title: "Lịch sử",
+            title: "Chat App",
           }}
         />
       </Drawer.Navigator>

@@ -1,0 +1,415 @@
+{
+  "conversations": [
+    {
+      "question": "tôi cảm thấy buồn",
+      "similarQuestions": [
+        "tôi buồn quá",
+        "tôi thấy buồn",
+        "tôi đang buồn",
+        "sao tôi buồn thế này",
+        "tôi chán quá",
+        "tôi thấy chán",
+        "tôi không vui",
+        "tôi muốn khóc"
+      ],
+      "answer": "Tôi hiểu cảm xúc của bạn. Hãy chia sẻ thêm về điều gì đang khiến bạn buồn nhé? Đôi khi nói ra những điều làm ta buồn sẽ giúp ta cảm thấy nhẹ nhõm hơn đấy."
+    },
+    {
+      "question": "tôi đang stress",
+      "similarQuestions": [
+        "tôi bị stress",
+        "tôi đang căng thẳng",
+        "tôi thấy căng thẳng quá",
+        "tôi stress quá",
+        "tôi đang rất áp lực",
+        "tôi thấy áp lực quá",
+        "tôi bị ngột ngạt",
+        "tôi thấy mệt mỏi"
+      ],
+      "answer": "Stress là phản ứng tự nhiên của cơ thể. Bạn có thể thử một số phương pháp thư giãn như hít thở sâu, đi dạo hoặc nghe nhạc. Bạn muốn chia sẻ nguyên nhân gây stress không?"
+    },
+    {
+      "question": "tôi thất tình",
+      "similarQuestions": [
+        "người yêu bỏ tôi",
+        "tôi chia tay rồi",
+        "tình yêu tan vỡ",
+        "tôi bị phản bội",
+        "tôi đang đau khổ vì tình yêu",
+        "tôi không muốn yêu nữa",
+        "tôi thất bại trong tình yêu"
+      ],
+      "answer": "Tôi rất thông cảm với nỗi đau của bạn. Thất tình là trải nghiệm rất khó khăn và đau đớn. Hãy cho bản thân thời gian để chữa lành và đừng quên rằng bạn xứng đáng được hạnh phúc. Bạn có muốn chia sẻ thêm không?"
+    },
+    {
+      "question": "tôi thấy cô đơn",
+      "similarQuestions": [
+        "tôi không có bạn",
+        "tôi cảm thấy lẻ loi",
+        "không ai hiểu tôi",
+        "tôi thấy mình cô độc quá",
+        "tôi muốn có người tâm sự",
+        "tôi không có ai bên cạnh"
+      ],
+      "answer": "Cảm giác cô đơn có thể rất khó khăn. Bạn có thể thử tham gia các hoạt động nhóm, câu lạc bộ hoặc tình nguyện để gặp gỡ những người mới. Đôi khi, việc chia sẻ cảm xúc với người khác cũng giúp ta cảm thấy được kết nối hơn."
+    },
+    {
+      "question": "tôi lo lắng về tương lai",
+      "similarQuestions": [
+        "tôi sợ tương lai",
+        "tôi không biết tương lai sẽ ra sao",
+        "tôi bất an về tương lai",
+        "tôi không biết phải làm gì",
+        "tương lai mờ mịt quá",
+        "tôi hoang mang về tương lai"
+      ],
+      "answer": "Lo lắng về tương lai là điều rất bình thường. Thay vì lo lắng quá nhiều, hãy thử tập trung vào những việc bạn có thể làm ngay bây giờ. Bạn có thể chia sẻ cụ thể hơn về điều gì đang khiến bạn lo lắng không?"
+    },
+    {
+      "question": "tôi không tự tin",
+      "similarQuestions": [
+        "tôi thấy mình kém cỏi",
+        "tôi không đủ tốt",
+        "tôi ghét bản thân",
+        "tôi thấy mình vô dụng",
+        "tôi không thích bản thân",
+        "tôi kém hơn người khác"
+      ],
+      "answer": "Mỗi người đều có những điểm mạnh riêng. Đừng so sánh bản thân với người khác. Hãy tập trung vào việc phát triển những điểm mạnh của mình. Bạn có thể kể cho tôi nghe về những thành công nhỏ mà bạn đã đạt được không?"
+    },
+    {
+      "question": "tôi hay suy nghĩ tiêu cực",
+      "similarQuestions": [
+        "tôi bi quan quá",
+        "tôi hay nghĩ xấu",
+        "tôi không lạc quan được",
+        "tôi hay nghĩ không tốt",
+        "tôi không thấy hi vọng"
+      ],
+      "answer": "Suy nghĩ tiêu cực có thể ảnh hưởng lớn đến cuộc sống. Hãy thử viết ra những điều tích cực đã xảy ra trong ngày, dù là việc nhỏ nhất. Điều này có thể giúp bạn nhìn nhận cuộc sống cân bằng hơn."
+    },
+    {
+      "question": "tôi mất ngủ",
+      "similarQuestions": [
+        "tôi khó ngủ",
+        "tôi không ngủ được",
+        "tôi trằn trọc",
+        "tôi thức khuya",
+        "tôi hay tỉnh giấc",
+        "tôi ngủ không ngon"
+      ],
+      "answer": "Mất ngủ có thể ảnh hưởng nhiều đến sức khỏe và tinh thần. Bạn có thể thử một số cách như: tập thể dục nhẹ nhàng ban ngày, tránh caffein buổi tối, thiết lập thời gian đi ngủ cố định. Bạn thường làm gì trước khi đi ngủ?"
+    },
+    {
+      "question": "tôi hay giận dữ",
+      "similarQuestions": [
+        "tôi dễ nổi nóng",
+        "tôi hay cáu gắt",
+        "tôi khó kiểm soát cảm xúc",
+        "tôi hay bực tức",
+        "tôi hay tức giận",
+        "tôi dễ cáu"
+      ],
+      "answer": "Cảm xúc giận dữ là bình thường, nhưng quan trọng là cách ta kiểm soát nó. Khi cảm thấy tức giận, hãy thử đếm đến 10, hít thở sâu hoặc tạm rời khỏi tình huống đó. Bạn có muốn chia sẻ điều gì thường khiến bạn giận không?"
+    },
+    {
+      "question": "tôi hay lo âu",
+      "similarQuestions": [
+        "tôi hay lo lắng",
+        "tôi hay sợ hãi",
+        "tôi hay hoảng sợ",
+        "tôi bất an",
+        "tôi hay hồi hộp",
+        "tôi hay căng thẳng"
+      ],
+      "answer": "Lo âu là cảm giác rất phổ biến. Khi bạn cảm thấy lo âu, hãy tập trung vào hơi thở và những điều đang diễn ra xung quanh. Điều này giúp bạn kết nối với hiện tại và giảm lo âu. Bạn thường lo âu về những vấn đề gì?"
+    },
+    {
+      "question": "tôi muốn tự tử",
+      "similarQuestions": [
+        "tôi không muốn sống nữa",
+        "tôi muốn kết thúc cuộc đời",
+        "tôi không còn hy vọng để sống",
+        "tôi nghĩ đến cái chết",
+        "tôi muốn biến mất"
+      ],
+      "answer": "Tôi rất lo lắng khi nghe bạn nói vậy. Cuộc sống của bạn rất quý giá. Hãy gọi ngay số điện thoại đường dây nóng tư vấn tâm lý 19001544 hoặc liên hệ người thân tin cậy. Bạn không đơn độc trong chuyện này. Chúng ta có thể cùng nhau tìm cách giải quyết."
+    },
+    {
+      "question": "tôi hay ghen tị",
+      "similarQuestions": [
+        "tôi thấy ghen với người khác",
+        "tôi không thích người khác thành công",
+        "tôi hay so sánh bản thân",
+        "tôi khó chịu khi người khác hơn mình",
+        "tôi ganh tị với bạn bè"
+      ],
+      "answer": "Cảm giác ghen tị là bình thường, nhưng đừng để nó ảnh hưởng đến cuộc sống của bạn. Hãy tập trung vào phát triển bản thân và đặt mục tiêu cho riêng mình. Mỗi người có một hành trình riêng, bạn không cần phải giống ai cả."
+    },
+    {
+      "question": "tôi sợ thất bại",
+      "similarQuestions": [
+        "tôi sợ làm sai",
+        "tôi sợ mắc lỗi",
+        "tôi không dám thử thách",
+        "tôi sợ người khác chê cười",
+        "tôi sợ không làm được"
+      ],
+      "answer": "Nỗi sợ thất bại có thể cản trở chúng ta phát triển. Hãy nhớ rằng thất bại là một phần của quá trình học hỏi và trưởng thành. Bạn có thể chia sẻ điều gì đang khiến bạn lo sợ không?"
+    },
+    {
+      "question": "tôi hay trì hoãn",
+      "similarQuestions": [
+        "tôi lười biếng quá",
+        "tôi không có động lực",
+        "tôi hay để đến phút cuối",
+        "tôi không thể tập trung làm việc",
+        "tôi không hoàn thành công việc đúng hạn"
+      ],
+      "answer": "Trì hoãn là vấn đề phổ biến. Hãy thử chia nhỏ công việc thành các phần dễ quản lý hơn và tạo thời gian biểu cụ thể. Bạn có thể bắt đầu từ việc nhỏ nhất và dễ nhất trước."
+    },
+    {
+      "question": "tôi nghiện game",
+      "similarQuestions": [
+        "tôi chơi game nhiều quá",
+        "tôi không kiểm soát được việc chơi game",
+        "tôi bỏ bê việc học vì game",
+        "tôi dành nhiều thời gian cho game",
+        "tôi không thể ngừng chơi game"
+      ],
+      "answer": "Nghiện game có thể ảnh hưởng đến cuộc sống của bạn. Hãy thử đặt ra giới hạn thời gian chơi game và tìm các hoạt động thay thế như thể thao hoặc gặp gỡ bạn bè. Bạn có muốn chia sẻ về những ảnh hưởng của game đến cuộc sống không?"
+    },
+    {
+      "question": "tôi bị bắt nạt",
+      "similarQuestions": [
+        "tôi bị bạn bè đối xử tệ",
+        "tôi bị chọc ghẹo",
+        "tôi bị ức hiếp",
+        "tôi bị cô lập",
+        "họ hay chế giễu tôi"
+      ],
+      "answer": "Rất tiếc khi nghe bạn phải trải qua điều này. Bắt nạt là hành vi không thể chấp nhận được. Hãy chia sẻ với người lớn đáng tin cậy như thầy cô, cha mẹ hoặc tư vấn viên. Bạn không phải chịu đựng điều này một mình."
+    },
+    {
+      "question": "tôi hay ganh tỵ với người yêu",
+      "similarQuestions": [
+        "tôi ghen với người yêu",
+        "tôi không tin tưởng người yêu",
+        "tôi sợ người yêu phản bội",
+        "tôi hay nghi ngờ người yêu",
+        "tôi kiểm soát người yêu quá nhiều"
+      ],
+      "answer": "Ghen tuông trong tình yêu là bình thường, nhưng nếu quá mức có thể phá hủy mối quan hệ. Hãy thử trao đổi thẳng thắn với người yêu về cảm xúc của bạn và cùng nhau xây dựng lòng tin."
+    },
+    {
+      "question": "tôi bị ám ảnh về ngoại hình",
+      "similarQuestions": [
+        "tôi không thích vẻ ngoài của mình",
+        "tôi thấy mình xấu xí",
+        "tôi muốn thay đổi ngoại hình",
+        "tôi không tự tin về ngoại hình",
+        "tôi ghét nhìn mình trong gương"
+      ],
+      "answer": "Ngoại hình không phải là tất cả. Mỗi người đều có vẻ đẹp riêng. Thay vì tập trung vào khuyết điểm, hãy chăm sóc bản thân và phát huy những điểm mạnh của mình. Bạn có thể chia sẻ điều gì khiến bạn không hài lòng không?"
+    },
+    {
+      "question": "tôi không biết mình là ai",
+      "similarQuestions": [
+        "tôi đang tìm kiếm bản thân",
+        "tôi không hiểu mình muốn gì",
+        "tôi không biết đam mê là gì",
+        "tôi không có định hướng",
+        "tôi không biết mình thích gì"
+      ],
+      "answer": "Việc tìm hiểu bản thân là một hành trình dài. Hãy thử trải nghiệm nhiều điều mới, ghi chép lại cảm xúc và suy nghĩ của mình. Dần dần bạn sẽ hiểu rõ bản thân hơn."
+    },
+    {
+      "question": "tôi sợ giao tiếp",
+      "similarQuestions": [
+        "tôi ngại nói chuyện với người lạ",
+        "tôi khó kết bạn",
+        "tôi sợ đám đông",
+        "tôi hay lo lắng khi gặp người mới",
+        "tôi không biết cách giao tiếp"
+      ],
+      "answer": "Nhiều người cũng có nỗi sợ tương tự. Hãy bắt đầu từ những tình huống nhỏ và quen thuộc. Bạn có thể tham gia các nhóm có cùng sở thích để dễ dàng trò chuyện hơn."
+    },
+    {
+      "question": "tôi hay tức giận với gia đình",
+      "similarQuestions": [
+        "tôi cãi nhau với bố mẹ",
+        "tôi không hòa thuận với gia đình",
+        "tôi ghét gia đình mình",
+        "tôi không được gia đình hiểu",
+        "tôi muốn rời xa gia đình"
+      ],
+      "answer": "Mâu thuẫn gia đình có thể rất căng thẳng. Hãy thử bình tĩnh chia sẻ cảm xúc của bạn với gia đình, và cũng lắng nghe quan điểm của họ. Đôi khi cần thời gian để hiểu nhau hơn."
+    },
+    {
+      "question": "làm sao để vượt qua nỗi buồn",
+      "similarQuestions": [
+        "cách vượt qua buồn bã",
+        "phương pháp vượt qua nỗi buồn",
+        "làm gì khi buồn",
+        "cách đối phó với buồn bã",
+        "làm sao để vui vẻ trở lại"
+      ],
+      "answer": "Có nhiều cách để vượt qua nỗi buồn: 1) Vận động cơ thể thường xuyên để tăng endorphin 2) Duy trì thói quen sinh hoạt điều độ 3) Viết nhật ký để giải tỏa cảm xúc 4) Tham gia các hoạt động xã hội 5) Tìm kiếm sự hỗ trợ từ bạn bè và gia đình. Bạn đã thử cách nào chưa?"
+    },
+    {
+      "question": "làm sao để kiểm soát cảm xúc",
+      "similarQuestions": [
+        "cách kiểm soát cảm xúc",
+        "làm chủ cảm xúc",
+        "kiểm soát tâm trạng",
+        "điều khiển cảm xúc",
+        "quản lý cảm xúc"
+      ],
+      "answer": "Để kiểm soát cảm xúc tốt hơn, bạn có thể: 1) Thực hành hít thở sâu khi cảm xúc dâng cao 2) Nhận diện trigger gây kích động 3) Tập thiền định mỗi ngày 4) Ghi chép lại cảm xúc 5) Học cách trì hoãn phản ứng. Bạn thấy khó khăn nhất ở điểm nào?"
+    },
+    {
+      "question": "làm sao để tự tin hơn",
+      "similarQuestions": [
+        "cách tăng sự tự tin",
+        "phương pháp xây dựng tự tin",
+        "làm sao để tự tin",
+        "cách để tự tin hơn",
+        "tăng sự tự tin"
+      ],
+      "answer": "Để xây dựng sự tự tin, bạn nên: 1) Đặt mục tiêu nhỏ và đạt được chúng 2) Chăm sóc ngoại hình 3) Học kỹ năng mới 4) Thực hành nói trước gương 5) Tập trung vào điểm mạnh của bản thân 6) Chấp nhận thất bại như cơ hội học hỏi. Bạn muốn bắt đầu từ điểm nào?"
+    },
+    {
+      "question": "làm sao để ngủ ngon",
+      "similarQuestions": [
+        "cách để ngủ ngon",
+        "làm sao để trị mất ngủ",
+        "phương pháp cải thiện giấc ngủ",
+        "làm sao để dễ ngủ",
+        "cách chữa mất ngủ",
+        "tips ngủ ngon"
+      ],
+      "answer": "Để có giấc ngủ ngon, bạn nên: 1) Tạo thời gian biểu ngủ cố định 2) Tránh caffein và điện thoại trước khi ngủ 3) Tập thể dục ban ngày 4) Tạo môi trường ngủ thoải mái, tối và mát 5) Thư giãn trước khi ngủ bằng đọc sách hoặc nghe nhạc nhẹ. Bạn đang gặp vấn đề gì với giấc ngủ?"
+    },
+    {
+      "question": "làm sao để giảm stress",
+      "similarQuestions": [
+        "cách đối phó với stress",
+        "phương pháp giảm căng thẳng",
+        "làm gì khi stress",
+        "cách thư giãn",
+        "giảm áp lực"
+      ],
+      "answer": "Để giảm stress hiệu quả: 1) Tập yoga hoặc thiền 2) Tập thể dục thường xuyên 3) Dành thời gian cho sở thích 4) Chia sẻ với người tin tưởng 5) Học cách nói 'không' với áp lực 6) Tổ chức thời gian khoa học 7) Nghỉ ngơi đầy đủ. Bạn thường làm gì để giảm stress?"
+    },
+    {
+      "question": "làm sao để quên người yêu cũ",
+      "similarQuestions": [
+        "cách vượt qua tình cũ",
+        "quên tình cũ như thế nào",
+        "vượt qua chia tay",
+        "cách hết yêu người cũ",
+        "làm sao để move on"
+      ],
+      "answer": "Để vượt qua tình cũ, bạn có thể: 1) Chấp nhận cảm xúc đau buồn 2) Tập trung phát triển bản thân 3) Tham gia hoạt động mới 4) Xóa bỏ kỷ vật và liên lạc 5) Dành thời gian cho bạn bè và gia đình 6) Đặt mục tiêu mới cho bản thân. Đừng ép buộc bản thân phải quên ngay, hãy cho phép thời gian chữa lành."
+    },
+    {
+      "question": "làm sao để cải thiện mối quan hệ",
+      "similarQuestions": [
+        "cách cải thiện quan hệ",
+        "làm sao để giao tiếp tốt hơn",
+        "cách xây dựng mối quan hệ",
+        "phương pháp tạo quan hệ tốt",
+        "cải thiện kỹ năng giao tiếp"
+      ],
+      "answer": "Để cải thiện mối quan hệ, bạn nên: 1) Lắng nghe tích cực không phán xét 2) Thể hiện sự quan tâm chân thành 3) Tôn trọng ranh giới cá nhân 4) Giao tiếp rõ ràng, thẳng thắn 5) Dành thời gian chất lượng 6) Thể hiện lòng biết ơn. Bạn đang gặp khó khăn gì trong các mối quan hệ?"
+    },
+    {
+      "question": "làm sao để tập trung học tập",
+      "similarQuestions": [
+        "cách tập trung học",
+        "phương pháp học tập hiệu quả",
+        "làm sao để học tốt hơn",
+        "cách cải thiện việc học",
+        "tăng khả năng tập trung"
+      ],
+      "answer": "Để tập trung học tập tốt hơn: 1) Chia nhỏ thời gian học (phương pháp Pomodoro) 2) Tạo môi trường học tập yên tĩnh 3) Đặt mục tiêu rõ ràng cho mỗi buổi học 4) Tránh phân tâm từ điện thoại 5) Nghỉ ngơi đủ giấc 6) Thưởng cho bản thân sau khi hoàn thành. Bạn thấy điều gì hay làm mình mất tập trung nhất?"
+    },
+    {
+      "question": "làm sao để giảm lo âu",
+      "similarQuestions": [
+        "cách đối phó với lo âu",
+        "phương pháp giảm lo lắng",
+        "làm gì khi lo lắng",
+        "cách kiểm soát lo âu",
+        "giảm anxiety"
+      ],
+      "answer": "Để giảm lo âu, bạn có thể: 1) Thực hành hít thở sâu 2) Tập thiền chánh niệm 3) Viết ra những điều lo lắng 4) Tập thể dục thường xuyên 5) Hạn chế caffein và đường 6) Ngủ đủ giấc 7) Tìm kiếm hỗ trợ chuyên môn nếu cần. Hãy chia sẻ điều gì đang khiến bạn lo lắng nhất?"
+    },
+    {
+      "question": "làm sao để tha thứ",
+      "similarQuestions": [
+        "cách học cách tha thứ",
+        "làm sao để bớt giận",
+        "cách buông bỏ hận thù",
+        "phương pháp tha thứ",
+        "học cách forgive"
+      ],
+      "answer": "Để học cách tha thứ: 1) Chấp nhận cảm xúc của bản thân 2) Hiểu rằng tha thứ là vì bản thân 3) Thay đổi góc nhìn về tình huống 4) Tập trung vào hiện tại và tương lai 5) Thực hành lòng từ bi 6) Cho phép thời gian chữa lành. Tha thứ không có nghĩa là bạn đồng ý với hành động sai trái, mà là để bản thân được tự do."
+    },
+    {
+      "question": "tôi buồn vì điểm thấp",
+      "similarQuestions": [
+        "tôi thi trượt rồi",
+        "điểm số của tôi không tốt",
+        "tôi học kém quá",
+        "tôi thất bại trong kỳ thi",
+        "tôi không đạt được điểm như mong muốn"
+      ],
+      "answer": "Mình hiểu cảm giác thất vọng của bạn lúc này. Điểm số không phải là tất cả đâu và nó cũng không định nghĩa giá trị của bạn. Có thể chia sẻ với mình bạn đã chuẩn bị như thế nào không? Mình có thể cùng bạn tìm ra phương pháp học phù hợp hơn. Đôi khi thất bại lại là cơ hội để ta nhìn nhận lại và phát triển tốt hơn đấy! 💪"
+    },
+    {
+      "question": "bạn bè tránh mặt tôi",
+      "similarQuestions": [
+        "không ai chơi với tôi",
+        "bạn bè xa lánh tôi",
+        "tôi bị bạn bè phớt lờ",
+        "bạn bè không thích tôi",
+        "tôi không hợp với nhóm bạn"
+      ],
+      "answer": "Chắc bạn đang cảm thấy rất tổn thương và cô đơn phải không? Đừng vội kết luận là do bạn không tốt nhé. Đôi khi có thể do hiểu lầm hoặc thiếu giao tiếp thôi. Bạn thử nghĩ xem gần đây có chuyện gì xảy ra không? Mình có thể cùng bạn tìm cách giải quyết và xây dựng tình bạn tốt đẹp hơn 🤗"
+    },
+    {
+      "question": "tôi thất tình vì người yêu phản bội",
+      "similarQuestions": [
+        "người yêu tôi có người khác",
+        "tôi bị cắm sừng",
+        "người yêu tôi không chung thủy",
+        "tôi bị phản bội trong tình yêu",
+        "người yêu tôi lừa dối"
+      ],
+      "answer": "Mình thực sự rất tiếc khi nghe điều này. Bị phản bội là một tổn thương rất lớn và bạn có quyền cảm thấy đau lòng. Nhưng hãy nhớ rằng đó không phải là lỗi của bạn nhé! Người không biết trân trọng tình cảm chân thành của bạn không xứng đáng với bạn đâu. Giờ điều quan trọng nhất là chăm sóc cho trái tim và tinh thần của bạn. Bạn đã thử làm gì để vượt qua nỗi đau này chưa? 🫂"
+    },
+    {
+      "question": "tôi áp lực với công việc",
+      "similarQuestions": [
+        "công việc quá nhiều",
+        "tôi làm không xuể",
+        "sếp đòi hỏi quá nhiều",
+        "tôi không đáp ứng được deadline",
+        "tôi stress vì công việc"
+      ],
+      "answer": "Mình thấu hiểu áp lực công việc mà bạn đang phải đối mặt. Đôi khi cảm giác như mọi thứ đè nặng lên vai phải không? Hãy thử chia nhỏ công việc ra và giải quyết từng phần một nhé. Bạn cũng nên trao đổi thẳng thắn với sếp về khối lượng công việc. Đừng quên dành thời gian nghỉ ngơi và thư giãn nữa - có thể là đi dạo, tập thể dục hay làm điều bạn thích. Bạn đã thử cách nào chưa? 😊"
+    },
+    {
+      "question": "bố mẹ không hiểu tôi",
+      "similarQuestions": [
+        "bố mẹ áp đặt tôi quá",
+        "cha mẹ không ủng hộ tôi",
+        "bố mẹ không lắng nghe tôi",
+        "tôi không thể nói chuyện với bố mẹ",
+        "cha mẹ không tôn trọng quyết định của tôi"
+      ],
+      "answer": "Khoảng cách thế hệ đôi khi khiến chúng ta cảm thấy khó được thấu hiểu, phải không bạn? Bố mẹ thường xuất phát từ tình yêu thương mà có những lo lắng và mong muốn cho con cái, dù cách thể hiện có thể khiến ta cảm thấy bị áp đặt. Bạn thử chọn thời điểm thích hợp, bình tĩnh chia sẻ với bố mẹ về cảm xúc và dự định của mình nhé. Đôi khi họ cần thời gian để hiểu và chấp nhận những thay đổi. Bạn muốn kể thêm về tình huống cụ thể không? 💝"
+    }
+  ]
+}

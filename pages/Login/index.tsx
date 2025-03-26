@@ -36,6 +36,7 @@ const LoginPage: React.FC<ILoginScreenProps> = ({ onEyePress }) => {
 
   const handleLogin = async () => {
     try {
+      console.log(userName, password);
       const response = await loginUser({ username: userName, password });
       if (response.status === 200) {
         Toast.show({
@@ -44,7 +45,10 @@ const LoginPage: React.FC<ILoginScreenProps> = ({ onEyePress }) => {
           text1Style: { textAlign: "center", fontSize: 16 },
         });
         await AsyncStorage.setItem("token", response.data.token);
-        await AsyncStorage.setItem("userData", JSON.stringify(response.data.user));
+        await AsyncStorage.setItem(
+          "userData",
+          JSON.stringify(response.data.user)
+        );
         navigation.navigate("AppNavigation");
       } else {
         Toast.show({
