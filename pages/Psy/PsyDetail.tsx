@@ -142,10 +142,11 @@ const PsyDetail: React.FC<PsyDetailProps> = ({ route, navigation }) => {
         {
           time_slot_id: Number(selectedAppointment.time_slot_id),
           notes: "Lịch hẹn tư vấn",
-          date: dayjs(selectedDate).toISOString(),
+          date: dayjs(selectedDate).utc().toISOString(),
         },
       ],
     };
+    console.log(payload);
 
     try {
       await createAppointment(payload);

@@ -197,7 +197,7 @@ const ChatAppMiniWrapper = ({ onClose }: { onClose: () => void }) => {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    bottom: 25,
+    bottom: 50,
     right: 25,
     alignItems: "flex-end",
     zIndex: 999,
