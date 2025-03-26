@@ -149,22 +149,6 @@ export const ProgramHistoryComponent = () => {
         </View>
 
         <View style={styles.cardFooter}>
-          <View style={styles.progressContainer}>
-            <Text style={styles.progressLabel}>Tiến độ</Text>
-            <View style={styles.progressBarContainer}>
-              {/* <View
-                style={[
-                  styles.progressBar,
-                  {
-                    width: `80%`,
-                    backgroundColor: statusColor,
-                  },
-                ]}
-              /> */}
-            </View>
-            <Text style={styles.progressPercentage}>80%</Text>
-          </View>
-
           <View style={styles.dateContainer}>
             <Text style={styles.dateLabel}>Tham gia:</Text>
             <Text style={styles.dateValue}>{formatDate(item.endDate)}</Text>

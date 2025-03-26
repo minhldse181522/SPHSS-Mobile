@@ -143,6 +143,9 @@ function PsyPage() {
 
       {/* Header */}
       <LinearGradient colors={["#3674B5", "#2A5A8E"]} style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
         <Text style={styles.headerTitle}>Chuyên gia tâm lý</Text>
         <View style={styles.searchButton}>
           <Ionicons name="search" size={20} color="#fff" />

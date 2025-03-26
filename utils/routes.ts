@@ -6,7 +6,7 @@ export type RootStackParamList = {
   home: undefined; // undefined nghĩa là màn hình không có parameter
   AppNavigation: undefined;
   program: undefined;
-  psy: undefined;
+  Psy: undefined;
   PsyDetail: { doctor: Doctor };
   ChatApp: undefined;
   ProgramDetail: { program: Program };

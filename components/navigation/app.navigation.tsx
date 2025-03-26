@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import ChatAppPage from "../../pages/Chat";
 import AppointmentSchedule from "../../pages/History/AppointmentSchedule";
 import AppointmentReport from "../../pages/History/AppointmentReport";
@@ -50,6 +50,11 @@ const HomeLayout = () => {
           title: "Trang chủ",
         }}
       />
+      <Stack.Screen
+        name="SurveyDetail"
+        component={SurveyDetail}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -78,7 +83,7 @@ const PsyLayout = () => {
   return (
     <PsyStack.Navigator>
       <PsyStack.Screen
-        name="psy"
+        name="Psy"
         component={PsyPage}
         options={{ headerShown: false }}
       />
@@ -112,10 +117,29 @@ const SurveyLayout = () => {
 const HistoryLayout = () => {
   const Tab = createMaterialTopTabNavigator<HistoryTabParamList>();
   const Stack = createNativeStackNavigator();
+  const navigation = useNavigation();
 
   const HistoryTabs = () => {
     return (
       <View style={{ flex: 1, backgroundColor: "#F8F9FA" }}>
+        <TouchableOpacity
+          style={{
+            position: "absolute",
+            top: 37,
+            left: 16,
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            // backgroundColor: "rgba(0, 0, 0, 0.3)",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 8,
+            zIndex: 10,
+          }}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
         <View
           style={{
             backgroundColor: "#3674B5",
@@ -130,6 +154,7 @@ const HistoryLayout = () => {
               fontWeight: "bold",
               color: "#fff",
               marginBottom: 8,
+              marginLeft: 50,
             }}
           >
             Lịch sử hoạt động

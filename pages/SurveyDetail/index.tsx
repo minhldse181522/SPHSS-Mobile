@@ -263,6 +263,7 @@ function SurveyDetail() {
                 height={220}
                 yAxisLabel=""
                 yAxisSuffix=""
+                yAxisInterval={1}
                 chartConfig={{
                   backgroundColor: "#fff",
                   backgroundGradientFrom: "#fff",
